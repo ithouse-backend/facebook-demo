@@ -1,0 +1,194 @@
+.main__friends {
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+}
+.friends__left-sidebar {
+  width: 360px;
+  height: 100vh;
+  background-color: #fff;
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1), 3px 0 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+.friends__left-sidebar--top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.friends__left-sidebar--top h1 {
+  font-size: 24px;
+  font-weight: 700;
+}
+.friends__left-sidebar--top i {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #d8dadf;
+  font-size: 20px;
+  cursor: pointer;
+}
+.friends__left-sidebar--content {
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 10px;
+  position: relative;
+}
+.friends__left-sidebar--content a {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 100%;
+  padding: 6px 5px;
+  text-decoration: none;
+  color: #111;
+  border-radius: 7px;
+  position: relative;
+}
+.friends__left-sidebar--content a:hover {
+  color: inherit;
+}
+.friends__left-sidebar--content .fa-user-group,
+.fa-user,
+.fa-user-plus,
+.fa-users,
+.fa-cake-candles {
+  width: 40px !important;
+  height: 40px;
+  font-size: 16px;
+  border-radius: 50%;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-right: 10px !important;
+  background-color: #d8dadf;
+  color: #000;
+}
+
+.first__left-sidebar-a {
+  background-color: #f0f2f5;
+}
+.changed_color {
+  background-color: #1877f2 !important;
+  color: #000 !important;
+}
+.friends__left-sidebar--content .fa-chevron-right {
+  position: absolute;
+  right: 10px;
+  color: #888;
+  font-size: 20px;
+}
+.friends__left-sidebar--content a:hover {
+  background-color: #f0f2f5;
+}
+/* Friend Requests */
+.friend__requests {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.friend__requests-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.friend__requests-content h1 {
+  color: #65676b;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 20px;
+}
+.friend__requests-content i {
+  font-size: 100px;
+  color: #666;
+}
+.friends__recieve {
+  width: 100px;
+  padding: 20px 30px;
+}
+.friends__recieve h3 {
+  font-weight: 700;
+}
+.friends__recieve--wrapper {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+.friends__recieve--box {
+  width: 180px;
+  height: 330px;
+  box-shadow: 2px 2px 6px #999;
+}
+.friends__recieve--box .friends__recieve--img {
+  width: 100%;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+.friends__recieve--box--bottom {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 5px 6px 16px 5px;
+  justify-content: left;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.friends__recieve--box--bottom h4 {
+  font-size: 18px;
+  font-weight: 600;
+  padding-left: 10px;
+}
+.friends__recieve--box--bottom .confirm {
+  background-color: #0861f2 !important;
+  border: 1px solid #0861f2;
+  color: #fff;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+.friends__recieve--box--bottom .confirm:hover {
+  color: #fff !important;
+  background-color: inherit;
+  border-color: #0861f2;
+}
+.friends__recieve--box--bottom form {
+  width: 100%;
+  margin-left: 0;
+}
+.friends__recieve--box--bottom .delete {
+  width: 100%;
+  background-color: #d8dadf;
+  border: none;
+  color: #000;
+  margin-top: 3px;
+  padding: 7px 20px;
+  border-radius: 5px;
+}
+.friends__all {
+  width: 100%;
+  padding-top: 20px;
+}
+.friends__box {
+  width: 96%;
+  height: 100px;
+  background-color: #d8dadf;
+}
+.heading2-custom {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* Friend Requests */

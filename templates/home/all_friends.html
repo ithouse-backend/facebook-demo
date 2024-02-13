@@ -1,0 +1,33 @@
+{% extends 'home/friends.html' %}
+
+
+{% block friends_content %}
+{% if not have_request %}
+<div class="friend__requests">
+    <div class="friend__requests-content">
+        <i class="fa-solid fa-users-line"></i>
+        <h1>When you have friend requests or suggestions, you'll see them here.</h1>
+    </div>
+</div>
+{% else %}
+<div class="friends__recieve">
+    {% for x in friends_requests_received %}
+    <div class="friends__recieve--box">
+        <div class="friends__recieve--img" style="background-image: url({{x.requester.profile.avatar.url}});">
+        </div>
+        <div class="friends__recieve--box--bottom">
+            <h4>{{x.requester.firstname}}{{x.requester.lastname}}</h4>
+            <form action="{% url 'friends' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="request_id" value="{{x.id}}">
+                <input type="hidden" name="action" value="accept">
+                <button class="confirm btn btn-info mx-auto" type="submit">Confirm</button>
+            </form>
+
+            <button class="delete mx-auto">Delete</button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

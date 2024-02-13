@@ -1,0 +1,248 @@
+{% extends 'home/index.html' %}
+
+{% block content %}
+<style>
+    .main__friends {
+        z-index: 10;
+        position: relative;
+    }
+
+    .friends {
+        z-index: 1000;
+    }
+
+    .friend__section-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .friend__section-link {
+        font-weight: 700;
+        font-size: 16px;
+        position: relative;
+        margin-top: 10px;
+        z-index: 2;
+    }
+
+    .fa-ellipsis {
+        position: absolute;
+        z-index: 1;
+        right: 10px;
+        color: #888;
+        font-size: 20px;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        transition: 0.3s background-color ease;
+    }
+
+    .fa-ellipsis:hover {
+        background-color: #ccc;
+    }
+
+    .modal_friend {
+        width: 344px;
+        height: 206px;
+        background-color: #fff;
+        position: absolute;
+        right: -320px;
+        top: 160px;
+        box-shadow: 3px 3px 30px -10px rgba(0, 0, 0, 0.75);
+        display: none;
+        padding: 10px;
+        z-index: 3;
+    }
+
+    .modal_friend::before {
+        position: absolute;
+        content: "";
+        width: 50px;
+        height: 50px;
+        background-color: #fff;
+        clip-path: polygon(0 0, 0% 100%, 100% 100%);
+        top: -20px;
+        left: 0;
+        border-radius: 5px;
+    }
+
+    .modal_friend-a {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal_friend a div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal_friend a span:last-child {
+        font-size: 13px;
+    }
+
+    .modal_friend a i {
+        font-size: 20px;
+    }
+
+    .modal_friend span {
+        font-size: 20px;
+        color: #000;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 0;
+    }
+
+    .show__friend {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .modal_friend .friend__section-link {
+        display: none;
+    }
+</style>
+<div class="main__friends">
+    <div class="friends">
+        <div class="friends__left-sidebar">
+            <div class="friends__left-sidebar--top">
+                <h1>Friends</h1>
+                <i class="fa-solid fa-gear"></i>
+            </div>
+            <div class="friends__left-sidebar--content">
+                <a href="{% url 'friends' %}" class="first__left-sidebar-a">
+                    <i class="fa-solid fa-user-group changed_color"></i>
+                    Home
+                </a>
+                {% if not friends %}
+                <a href="#">
+                    No Friends
+                </a>
+                {% else %}
+                <h3 style="
+                margin: 10px;
+                font-size: 20px;
+                ">{{ friend_count }} friends</h3>
+                {% for x in friends %}
+                {% if x.user1 == request.user %}
+                <a href="{% url 'profile_friends' x.user2.unique_id %}" class="friend__section-link" id="links">
+                    <img class="friend__section-avatar" src="{{ x.user2.profile.avatar.url }}" alt="">
+                    <p style="margin-bottom: 0;">{{ x.user2.firstname }} {{ x.user2.lastname }}</p>
+                    <h4 style="display: none;">{{ x.user2.id }}</h4>
+                    <i class="fa-solid fa-ellipsis"></i>
+                    <div class="modal_friend">
+                        <a href="#" class="modal_friend-a">
+                            <i class="fa-solid fa-user-xmark"></i>
+                            <span class="name"></span>
+                            <a class="ids" href="{% url 'friend_delete' x.user2.id %}" style="height: 50px;">
+                                <span>Remove friend</span>
+                            </a>
+                        </a>
+                    </div>
+                </a>
+                {% else %}
+                <a href="{% url 'profile_friends' x.user1.unique_id %}" class="friend__section-link" id="links">
+                    <img class="friend__section-avatar" src="{{ x.user1.profile.avatar.url }}" alt="">
+                    <p style="margin-bottom: 0;">{{ x.user1.firstname }} {{ x.user1.lastname }}</p>
+                    <h4 style="display: none;">{{ x.user1.id }}</h4>
+                    <i class="fa-solid fa-ellipsis"></i>
+                    <div class="modal_friend">
+                        <a href="#" class="modal_friend-a">
+                            <i class="fa-solid fa-user-xmark"></i>
+                            <span class="name"></span>
+                            <a class="ids" href="{% url 'friend_delete' x.user1.id %}" style="height: 50px;">
+                                <span>Remove friend</span>
+                            </a>
+                        </a>
+                    </div>
+                </a>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% block profile %}
+    {% if messages %}
+    {% for x in messages %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50%;
+        ">
+        {{ x }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endblock %}
+</div>
+
+<script>
+    // Select all elements with the class "fa-ellipsis"
+    let ellipses = document.querySelectorAll(".fa-ellipsis");
+
+    // Select the modal and span elements
+    let modal = document.querySelector(".modal_friend");
+    let span = document.querySelector(".name");
+
+    // Loop through each ellipsis element and attach the event listener
+    ellipses.forEach(function (ellipsis, index) {
+        ellipsis.addEventListener("click", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            console.log(index);
+            if (index == 0) {
+                modal.style.top = '160px'
+            }
+            if (index === 1) {
+                modal.style.top = '250px'
+            } if (index == 2) {
+                modal.style.top = '340px'
+            }
+
+
+            // Find the closest <a> element
+            let anchorElement = e.target.closest(".friends__left-sidebar--content > #links");
+
+            // Check if the anchor element exists
+            if (anchorElement) {
+                // Find the <p> element inside the <a> element
+                let paragraphElement = anchorElement.querySelector("p");
+                let h4 = anchorElement.querySelector("span")
+                let h4s = anchorElement.querySelector("h4").textContent
+                let ids = document.querySelector(".ids")
+                ids.href = `/home/remove/friend/${h4s}/`
+
+                // Check if the paragraph element exists
+                if (paragraphElement) {
+                    // Update the span content with the text of the <p> element
+                    span.innerHTML = paragraphElement.textContent;
+                }
+            }
+
+            // Toggle the modal
+            modal.classList.toggle("show__friend");
+        });
+    });
+
+    // Event listener for clicks on the document
+    document.addEventListener("click", function (e) {
+        // Check if the clicked element is not an ellipsis icon or inside the modal
+        if (!Array.from(ellipses).some(ellipsis => ellipsis.contains(e.target)) && !modal.contains(e.target)) {
+            modal.classList.remove("show__friend");
+        }
+    });
+
+
+</script>
+{% endblock %}

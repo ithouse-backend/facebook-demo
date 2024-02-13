@@ -1,0 +1,45 @@
+<div class="modal fade" tabindex="-1" id="post_create" style="background-color: rgba(12, 12, 12, 0.4);">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="justify-content: center; position: relative;">
+                <h5 class="modal-title">Create Post</h5>
+                <i class="fa-solid fa-xmark" style="font-size: 20px; position: absolute; right: 10px; cursor: pointer;"
+                    data-bs-dismiss="modal" aria-label="Close"></i>
+            </div>
+            <div class="modal-body" style="padding-bottom: 0px;">
+                <div class="post__create-top">
+                    <img src="{{ request.user.profile.avatar.url }}" alt="">
+                    <div>
+                        <h3>{{ request.user.firstname }} {{ request.user.lastname }}</h3>
+                        <button>
+                            <i class="fa-solid fa-globe"></i>
+                            Public
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+                <form method="post" style="height: 400px;" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="text" placeholder="What's on your mind, {{ request.user.firstname }}?"
+                        name="post_message">
+                    <div class="post__create-form-label">
+                        <label for="file_choose">
+                            <div class="form__label-top">
+                                Add Photos/videos <br>
+                                <span>or drag and drop</span>
+                            </div>
+                            <div class="form__label-bottom">
+                                <i class="fa-solid fa-mobile-screen"></i>
+                                <p>Add photos and videos from your mobile device.</p>
+                                <button>Add</button>
+                            </div>
+                        </label>
+                        <input type="file" id="file_choose" name="file_post">
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 my-3 post_create--button">Post</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

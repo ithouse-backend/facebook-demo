@@ -1,0 +1,40 @@
+1. get the two person liked
+2. serialize this django object using serialize to json
+3. show them in the html using ajax success request
+data.comments.forEach((comment) => {
+                            let commentElement = comment.comment.time_day ?
+                            `<div classs="post__top-left--avatar post__comment-img" style="background-image: url(${comment.comment.user.profile.avatar.url});"></div>
+                                                  <div class="post__comment-text">
+                                                    <a href="#">
+                                                        ${comment.comment.user.firstname}
+                                                        ${comment.comment.user.lastname}
+                                                    </a>
+                                                    <p>${comment.comment.text}</p>
+                                                    <div>
+                                                        <span data-bs-toggle="tooltip" data-bs-placement="bottom", title="${comment.date_commented}">
+                                                            ${comment.times}d
+                                                        </span>
+                                                        <span>Like</span>
+                                                        <span>Reply</span>
+                                                  </div>
+                                                  <i class="fa-solid fa-ellipsis"></i>
+                                                  `
+                                                  :
+                            `<div classs="post__top-left--avatar post__comment-img" style="background-image: url(${comment.comment.user.profile.avatar.url});"></div>
+                                                  <div class="post__comment-text">
+                                                    <a href="#">
+                                                        ${comment.comment.user.firstname}
+                                                        ${comment.comment.user.lastname}
+                                                    </a>
+                                                    <p>${comment.comment.text}</p>
+                                                    <div>
+                                                        <span data-bs-toggle="tooltip" data-bs-placement="bottom", title="${comment.date_commented}">
+                                                            ${comment.times}h
+                                                        </span>
+                                                        <span>Like</span>
+                                                        <span>Reply</span>
+                                                  </div>
+                                                  <i class="fa-solid fa-ellipsis"></i>
+                                                  `
+                        $(".post__comment").append(commentElement)
+                        })

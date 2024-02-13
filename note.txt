@@ -1,0 +1,40 @@
+button class="hide-post-btn" data-post-id="{{ post.id }}">Hide</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var hideButtons = document.querySelectorAll('.hide-post-btn');
+
+        hideButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var postId = button.getAttribute('data-post-id');
+
+                // Store hide timestamp in localStorage
+                var hideTimestamp = new Date().getTime() + 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
+                localStorage.setItem('hide_' + postId, hideTimestamp);
+
+                // Hide the post on the client side
+                var post = document.querySelector('.post[data-post-id="' + postId + '"]');
+                if (post) {
+                    post.style.display = 'none';
+                }
+            });
+        });
+
+        // Check and show hidden posts on page load
+        var allPosts = document.querySelectorAll('.post');
+        allPosts.forEach(function (post) {
+            var postId = post.getAttribute('data-post-id');
+            var hideTimestamp = localStorage.getItem('hide_' + postId);
+
+            if (hideTimestamp) {
+                var currentTime = new Date().getTime();
+                if (currentTime > parseInt(hideTimestamp)) {
+                    post.style.display = 'block'; // Show the post if the hide duration has passed
+                }
+            }
+        });
+    });
+</script>
+
+
+Home pageda comment va like muammosini togirlash

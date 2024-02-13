@@ -1,0 +1,209 @@
+{% extends 'home/index.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% if request.user.profile == user.profile %}
+<div class="profile-up">
+    <div class="banner container" style="background-image: url({{ request.user.profile.banner.url }})">
+        <div class="banner__profile" style="background-image: url({{ request.user.profile.avatar.url }})">
+            <div class=" banner__icon">
+                <i class="fa-solid fa-camera"></i>
+            </div>
+        </div>
+        <div class="banner__right">
+            <a href="#"><i class="fa-solid fa-robot"></i>Create with avatar</a>
+            <a href="#"><i class="fa-solid fa-camera"></i> Edit cover photo</a>
+        </div>
+        <div class="banner__bottom">
+            {% if friends %}
+            <h2>{{ user.firstname }} {{ user.lastname }} <br>
+                <a href="{% url 'all_friends' %}" style="font-weight: 600; font-size: 15px; color: #444; margin: 0;">
+                    {{ friends }} friends</a>
+            </h2>
+            {% endif %}
+            <div>
+                <a href="#" class="btn btn-primary"><i class="fa-solid fa-plus fa-custom"></i> Add to story</a>
+                <button class="btn btn-light ms-1" data-bs-toggle="modal" data-bs-target="#profile_update">
+                    <i class="fa-solid fa-pen"></i>Edit profile</button>
+                <button class="btn btn-light"><i class="fa-solid fa-chevron-down"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-up__bottom container">
+        <ul>
+            <li><a href="#">Posts</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Friends</a></li>
+            <li><a href="#">Photos</a></li>
+            <li><a href="#">Videos</a></li>
+            <li><a href="#">Check-ins</a></li>
+            <li><a href="#">More</a></li>
+        </ul>
+        <i class="fa-solid fa-ellipsis"></i>
+    </div>
+</div>
+
+<div class="profile-body">
+    <div class="profile-body__main container">
+        <div class="profile-body__left">
+            <div class="profile-body__intro">
+                <h3>Intro</h3>
+                <button class="btn btn-light">Add Bio</button>
+                <button class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#edit_about">Edit
+                    details</button>
+                <button class="btn btn-light">Add Featured</button>
+            </div>
+            <div class="profile-body__photos">
+                <h3>Photos</h3>
+                <a href="#">See All Photos</a>
+            </div>
+            <div class="profile-body__photos">
+                <h3>Friends</h3>
+                <a href="#">See all Friends</a>
+            </div>
+            <div class="profile-body__bottom">
+                <ul>
+                    <li><a href="#">Privacy · </a></li>
+                    <li><a href="#">Terms · </a></li>
+                    <li><a href="#">Advertising · </a></li>
+                    <li><a href="#">Ad choices · </a></li>
+                    <li><a href="#">Cookies · </a></li>
+                    <li><a href="#">Meta © 2023</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="profile-body__right">
+            <div class="live">
+                <div class="live_1">
+                    <img class="person_per" src="{% static 'img/person.png' %}" alt="person">
+                    <input style="background-color: #f0efef; border-radius: 30px; border: none;" type="text"
+                        placeholder="What's on your mind?" class="form-control ms-2">
+                </div>
+                <hr class="what_2">
+
+                <div class="smile">
+                    <div class="smile-2">
+                        <img src="{% static 'img/video.png' %}" alt="">
+                        <a class="efir" href="#">Jonli efir</a>
+                    </div>
+                    <div class="smile-2">
+                        <img src="{% static 'img/galare.png' %}" alt="">
+                        <a class="efir" href="#">Photos</a>
+                    </div>
+                    <div class="smile-2">
+                        <img src="{% static 'img/smile.png' %}" alt="">
+                        <a class="efir" href="#">Feeling / activity</a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" tabindex="-1" id="profile_update" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="edit__top">
+                    <h1>Profile Picture</h1>
+                    <a href="#">Edit</a>
+                </div>
+                <div class="avatar_modal" style="background-image: url({{ request.user.profile.avatar.url }});">
+
+                </div>
+                <div class="edit__top">
+                    <h1>Cover Photo</h1>
+                    <a href="#">Edit</a>
+                </div>
+                <div class="avatar_modal banner_modal"
+                    style="background-image: url({{ request.user.profile.banner.url }});">
+                </div>
+                <form method="POST" style="height: 600px; width: 90%; margin: 20px 0;" class="mx-auto"
+                    enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class=" d-flex justify-content-between">
+                        {% render_field user_update.firstname class+="form-control me-1" %}
+                        {% render_field user_update.lastname class+="form-control ms-1" %}
+                    </div>
+                    {% render_field user_update.birthday class+="form-control my-2" %}
+                    {% render_field user_update.gender class+="form-control" %}
+                    <div class="d-flex align-items-center">
+                        {% render_field profile_update.banner class+="form-control my-2 me-1" %}
+                        {% render_field profile_update.avatar class+="form-control ms-1" %}
+                    </div>
+                    {% render_field profile_update.bio class+="form-control" %}
+                    <button type="submit" class="btn btn-success mx-auto w-100 mt-2">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="edit_about" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center">Edit About</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form style="height: 700px; width: 100%;" method="post">
+                    {% csrf_token %}
+                    {% render_field about_update.company class+="form-control me-1 py-3 my-2" placeholder="Company" %}
+                    {% render_field about_update.position class+="form-control me-1 py-3" placeholder="Position" %}
+                    {% render_field about_update.city class+="form-control me-1 py-3 my-2" %}
+                    {% render_field about_update.school class+="form-control me-1 py-3" %}
+                    {% render_field about_update.description class+="form-control me-1 py-3 my-2" %}
+                    <div style="display: flex; align-items: center;">
+                        <p style="margin: 4px 4px;">Is Graduated</p>
+                        {{ about_update.is_graduated }}
+                    </div>
+                    <button type="submit" class="btn btn-success my-2">Save</button>
+                    {{form.errors}}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="profile-up">
+    <div class="banner container" style="background-image: url({{ user.profile.banner.url }})">
+
+        <div class="banner__profile" style="background-image: url({{ user.profile.avatar.url }})">
+        </div>
+        <div class="banner__bottom">
+            <h2>{{ user.firstname }} {{ user.lastname }} <br>
+                <span style="font-weight: 600; font-size: 15px; color: #444; margin: 0;">1.2k friends</span>
+            </h2>
+            <div>
+                <a href="#" class="btn btn-primary"><i class="fa-solid fa-plus fa-custom"></i> Add Friend</a>
+                <button class="btn btn-light ms-1">
+                    <i class="fa-solid fa-message"></i>Message</button>
+                <button class="btn btn-light"><i class="fa-solid fa-chevron-down"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-up__bottom container">
+        <ul>
+            <li><a href="#">Posts</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Friends</a></li>
+            <li><a href="#">Photos</a></li>
+            <li><a href="#">Videos</a></li>
+            <li><a href="#">Check-ins</a></li>
+            <li><a href="#">More</a></li>
+        </ul>
+        <i class="fa-solid fa-ellipsis"></i>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

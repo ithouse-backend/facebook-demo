@@ -1,0 +1,36 @@
+{% extends 'home/friends_section.html' %}
+
+{% block profile %}
+<div class="profile-up">
+    <div class="banner container" style="background-image: url({{ user.profile.banner.url }})">
+
+        <div class="banner__profile" style="background-image: url({{ user.profile.avatar.url }})">
+        </div>
+        <div class="banner__bottom" style="width: 80%;">
+            <h2>{{ user.firstname }} {{ user.lastname }} <br>
+                <span style="font-weight: 600; font-size: 15px; color: #444; margin: 0;">{{ friend_count }}
+                    friends</span>
+            </h2>
+            <div style="position: absolute; left: 70%;">
+                <a href="#" class="btn btn-primary"><i class="fa-solid fa-plus fa-custom"></i> Add Friend</a>
+                <button class="btn btn-light ms-1">
+                    <i class="fa-solid fa-message"></i>Message</button>
+                <button class="btn btn-light"><i class="fa-solid fa-chevron-down"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-up__bottom container">
+        <ul>
+            <li><a href="#">Posts</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Friends</a></li>
+            <li><a href="#">Photos</a></li>
+            <li><a href="#">Videos</a></li>
+            <li><a href="#">Check-ins</a></li>
+            <li><a href="#">More</a></li>
+        </ul>
+        <i class="fa-solid fa-ellipsis"></i>
+    </div>
+</div>
+{% endblock %}

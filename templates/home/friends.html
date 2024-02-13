@@ -1,0 +1,61 @@
+{% extends 'home/index.html' %}
+
+{% block content %}
+<div class="main__friends">
+    <div class="friends">
+        <div class="friends__left-sidebar">
+            <div class="friends__left-sidebar--top">
+                <h1>Friends</h1>
+                <i class="fa-solid fa-gear"></i>
+            </div>
+            <div class="friends__left-sidebar--content">
+                <a href="{% url 'friends' %}" class="first__left-sidebar-a">
+                    <i class="fa-solid fa-user-group changed_color"></i>
+                    Home
+                </a>
+                <a href="{% url 'friend_requests' %}" onclick="changeColor(2)">
+                    <i class="fa-solid fa-user"></i>
+                    Friend requests
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a href="#" onclick="changeColor(3)">
+                    <i class="fa-solid fa-user-plus"></i>
+                    Suggestions
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a href="{% url 'all_friends' %}" onclick=" changeColor(4)">
+                    <i class="fa-solid fa-users"></i>
+                    All Friends
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a href="#" onclick="changeColor(5)">
+                    <i class="fa-solid fa-cake-candles"></i>
+                    Birthdays
+                </a>
+                <a href="#" onclick="changeColor(6)">
+                    <i class="fa-solid fa-users"></i>
+                    Custom Lists
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% block friends_content %}
+    {% endblock %}
+
+
+    <script>
+
+        function changeColor(divNumber) {
+            var divs = document.querySelectorAll(".friends__left-sidebar--conetent a");
+            divs.forEach(function (div) {
+                div.classList.remove("changed_color");
+            });
+            var clickedDiv = document.querySelector(".friends__left-sidebar--conetent a:nth-child(" + divNumber + ")");
+            if (clickedDiv) {
+                clickedDiv.classList.add("changed_color")
+            }
+        }
+    </script>
+</div>
+{% endblock %}
