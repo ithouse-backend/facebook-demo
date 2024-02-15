@@ -16,6 +16,6 @@ urlpatterns = [
     path("remove/friend/<int:receiver_id>/",
          views.RemoveFriendRequestView.as_view(), name='friend_delete'),
     path("post/<int:postID>/", views.post_detail, name='post_detail'),
-    path("post/test/", views.fetchPostData)
+    path('stories/create/', views.create_story, name='create_story')
 ]
 # monkeytype.com

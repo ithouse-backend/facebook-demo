@@ -506,6 +506,6 @@ def post_detail(request, postID):
         return render(request, "home/comment.html", context)
 
 
-def fetchPostData(request):
-    data = {"message": "Bu habar backend tomonidan kelyabdi"}
-    return JsonResponse(data)
+def create_story(request):
+    context = {}
+    return render(request, 'home/create_story.html', context)

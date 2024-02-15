@@ -134,17 +134,8 @@
         {% else %}
         <div style="position: relative; top: 80px; width: 680px;">
             <div class="personalaty">
-                <!-- <div class="personalaty-info">
-                    <div class="story">
-                        <i class="fa-solid fa-book-open"></i>
-                        <h1 class="insta">Stories</h1>
-                    </div>
-                    <div class="reels">
-                        <i class="fa-solid fa-clapperboard"></i>
-                        <h1 class="tik-tok">Reels</h1>
-                    </div>
-                </div> -->
                 <div class="create">
+                   <a href="{% url 'create_story' %}">
                     <div class="create-info">
                         <img class="shaxsiy_1" src="{{ request.user.profile.avatar.url }}" alt="person">
                         <div class="hikoya_1">
@@ -152,6 +143,7 @@
                             <a href="#">Create Story</a>
                         </div>
                     </div>
+                   </a>
                     <div class="create-info friend_stories">
                         <div style="background-image: url({% static 'img/nature.jpg' %});" class="shaxsiy_1">
 
