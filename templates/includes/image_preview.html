@@ -1,0 +1,55 @@
+{% load static %}
+<div class="story__image-preview">
+    <div class="story__image-preview-box">
+        <h4>Preview</h4>
+        <div class="story__image-preview-box-bg">
+            <img src="" alt="no image" id="imagePre">
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const inputFile = document.querySelector("#photo_story")
+        const imagePre = document.querySelector("#imagePre")
+        const storyPreviewWrapper = document.querySelector(".story__image-preview")
+        const storyPreviewButtonContainer = document.querySelector(".story__button-container")
+
+        inputFile.addEventListener("change", () => {
+            let [file] = inputFile.files
+            if (file) {
+                let reader = new FileReader()
+                reader.onload = (a) => {
+                    imagePre.src = a.target.result
+                    storyPreviewWrapper.style.display = 'flex'
+                    storyPreviewButtonContainer.style.display = 'flex'
+                }
+                reader.readAsDataURL(file)
+            } else {
+                storyPreviewWrapper.style.display = 'none'
+                storyPreviewButtonContainer.style.display = 'none'
+            }
+        })
+
+        storyPreviewWrapper.addEventListener('mousedown', (event) => {
+            let offsetX = event.clientX - imagePre.offsetLeft;
+            let offsetY = event.clientY - imagePre.offsetTop;
+
+            function moveImage(event) {
+                imagePre.style.left = (event.clientX - offsetX) + 'px'
+                imagePre.style.top = (event.clientY - offsetY) + 'px'
+            }
+
+            function stopMoving() {
+                window.removeEventListener('mousemove', moveImage)
+                window.removeEventListener('mouseup', stopMoving)
+            }
+
+            window.addEventListener('mousemove', moveImage)
+            window.addEventListener("mouseup", stopMoving)
+
+        })
+
+    })
+</script>

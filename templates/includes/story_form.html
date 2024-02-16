@@ -1,0 +1,22 @@
+<div class="story_form">
+    <form method="post" enctype="multipart/form-data">
+        <label for="photo_story" id="label1">
+            <span>
+                <i class="fa-solid fa-icons"></i>
+                Create a Photo Story
+            </span>
+        </label>
+        <input type="file" accept="image/*,video/mp4" name="story__file" id="photo_story" style="display: none;">
+        <label for="text_story" class="label2">
+            <span>
+                <i class="fa-solid fa-font"></i>
+                Create a Text Story
+            </span>
+        </label>
+        <div class="story__button-container">
+            <button>Discard</button>
+            <button type="submit">Share to Story</button>
+        </div>
+    </form>
+</div>
+{% include 'includes/image_preview.html' %}
