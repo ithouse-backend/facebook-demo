@@ -1,12 +1,8 @@
 let containerSlider = document.querySelector(".personalaty");
 let createSlider = document.querySelector(".create");
 let createInfoSliders = document.querySelectorAll(".create-info");
-let leftSlider = document.querySelector(
-  ".slider_buttons_home .fa-chevron-left"
-);
-let rightSlider = document.querySelector(
-  ".slider_buttons_home .fa-chevron-right"
-);
+let leftSlider = document.querySelector(".personalaty .fa-chevron-left");
+let rightSlider = document.querySelector(".personalaty .fa-chevron-right");
 
 let currentIndex = 0;
 const slideWidth = createInfoSliders[0].offsetWidth;
