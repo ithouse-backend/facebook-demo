@@ -384,18 +384,19 @@ def post_detail(request, postID):
             else:
                 lk = Like.objects.get(user=request.user, post=post)
                 lk.delete()
-                
 
         for like in likes:
             if like.user == request.user:
                 is_like = True
-                
-        like_count = likes.count() # get the count of likes
+
+        like_count = likes.count()  # get the count of likes
         like_count -= 2
-        liked_users = [{"firstname": like.user.firstname, "lastname": like.user.lastname} for like in likes]
+        liked_users = [{"firstname": like.user.firstname,
+                        "lastname": like.user.lastname} for like in likes]
         likes_person_two = liked_users[:2]
-        
-        comments = Comment.objects.filter(post=post).values("text", "user__firstname", "date_commented", "user__lastname", "post", "user__profile__avatar")
+
+        comments = Comment.objects.filter(post=post).values(
+            "text", "user__firstname", "date_commented", "user__lastname", "post", "user__profile__avatar")
         comment_count = comments.count()
 
         # Initialize lists for times and time_day
@@ -404,9 +405,11 @@ def post_detail(request, postID):
         # Calculate times and time_day
         for comment in comments:
             # Assuming timezone.now() is aware datetime
-            diff_day = (timezone.now().date() - comment['date_commented'].date()).days
+            diff_day = (timezone.now().date() -
+                        comment['date_commented'].date()).days
             if diff_day == 0:
-                times.append(abs(timezone.now().hour - comment['date_commented'].hour))
+                times.append(abs(timezone.now().hour -
+                             comment['date_commented'].hour))
                 time_day.append(False)
             else:
                 times.append(diff_day)
@@ -457,7 +460,7 @@ def post_detail(request, postID):
         comments = Comment.objects.all().filter(post=post)
 
         likes = Like.objects.all().filter(post=post)
-        
+
         for like in likes:
             if like.user == request.user:
                 is_like = True
@@ -504,8 +507,3 @@ def post_detail(request, postID):
             "comment_m": comment_m
         }
         return render(request, "home/comment.html", context)
-
-
-def create_story(request):
-    context = {}
-    return render(request, 'home/create_story.html', context)

@@ -106,7 +106,7 @@
   top: 0;
   left: 0;
   padding-left: 100px;
-  z-index: 6;
+  z-index: 3;
 }
 .story_form form label {
   width: 220px;
@@ -168,7 +168,7 @@
   justify-content: center;
   align-items: center;
   display: none;
-  z-index: 3;
+  z-index: 1;
 }
 .story__image-preview-box {
   width: 50%;
