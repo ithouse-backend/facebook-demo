@@ -413,6 +413,7 @@ span {
   margin-right: auto;
   position: relative;
   top: 0;
+  overflow: hidden;
   /* margin-bottom: 50px; */
 }
 
@@ -463,12 +464,13 @@ span {
   align-items: center;
   justify-content: left;
   gap: 5px;
+  transition: 0.3s all ease;
 }
 .create_info {
   position: relative;
+  flex: 0 0 100%;
 }
 .friend_stories {
-  overflow: hidden;
   width: 141px;
   max-width: 141px;
   max-height: 251px;
@@ -1105,4 +1107,30 @@ p {
 #liked_user {
   margin: 0;
   padding: 0;
+}
+.slider_buttons_home {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  padding: 0px 20px;
+  left: 0;
+  top: 35%;
+}
+.slider_buttons_home i {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  color: #444;
+  cursor: pointer;
+  font-size: 19px;
+  transition: 0.01s transform ease;
+}
+.slider_buttons_home i:active {
+  transform: scale(0.95);
 }
