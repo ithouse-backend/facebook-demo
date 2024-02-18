@@ -106,7 +106,7 @@
   top: 0;
   left: 0;
   padding-left: 100px;
-  z-index: 2;
+  z-index: 6;
 }
 .story_form form label {
   width: 220px;

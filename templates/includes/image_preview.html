@@ -15,6 +15,7 @@
         const imagePre = document.querySelector("#imagePre")
         const storyPreviewWrapper = document.querySelector(".story__image-preview")
         const storyPreviewButtonContainer = document.querySelector(".story__button-container")
+        const storyFormLabel = document.querySelectorAll(".story_form form label")
 
         inputFile.addEventListener("change", () => {
             let [file] = inputFile.files
@@ -24,11 +25,13 @@
                     imagePre.src = a.target.result
                     storyPreviewWrapper.style.display = 'flex'
                     storyPreviewButtonContainer.style.display = 'flex'
+                    storyFormLabel.forEach(e => e.style.display = 'none')
                 }
                 reader.readAsDataURL(file)
             } else {
                 storyPreviewWrapper.style.display = 'none'
                 storyPreviewButtonContainer.style.display = 'none'
+                storyForm.style.display = 'none'
             }
         })
 
