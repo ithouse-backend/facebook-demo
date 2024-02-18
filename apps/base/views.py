@@ -5,7 +5,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 
 from apps.authentication.models import User, FriendRequest, Friendship
-from .models import File, Post, Comment, Like
 from django.views.generic import RedirectView, ListView
 from django.core import serializers
 from django.contrib import messages
@@ -16,6 +15,9 @@ from django.forms.models import model_to_dict
 from django.core.serializers.json import DjangoJSONEncoder
 
 import json
+
+from .models import File, Post, Comment, Like
+from apps.story.models import Story
 
 
 class HomePage(LoginRequiredMixin, TemplateView):
@@ -192,8 +194,19 @@ class HomePage(LoginRequiredMixin, TemplateView):
             if comment_count > 1000 and comment_count < 1000000:
                 comment_k = True
             context['comment_k'] = comment_k
+
+        is_our_stories = []
+        stories = Story.objects.all()
+
         context['comment_count_list'] = comment_count_list
         context['like_count_list'] = like_count_list
+        for story in stories:
+            if story.user == self.request.user:
+                is_our_stories.append(True)
+            else:
+                is_our_stories.append(False)
+        context['stories'] = zip(Story.objects.all(), is_our_stories)
+
         if is_like and comment_count_list:
             context["videos"] = zip(
                 posts, trues, hide_posts, is_like, comment_count_list, like_count_list)

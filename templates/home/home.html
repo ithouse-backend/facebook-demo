@@ -44,7 +44,7 @@
                 </div>
                 <div class="person-1">
                     <a class="markets" href="">
-                       <img src="{% static 'img/market.svg' %}" alt="">
+                        <img src="{% static 'img/market.svg' %}" alt="">
                         Marketplace
                     </a>
                 </div>
@@ -135,33 +135,30 @@
         <div style="position: relative; top: 80px; width: 680px;">
             <div class="personalaty">
                 <div class="create">
-                   <a href="{% url 'create_story' %}">
-                    <div class="create-info">
-                        <img class="shaxsiy_1" src="{{ request.user.profile.avatar.url }}" alt="person">
-                        <div class="hikoya_1">
-                            <i class="fa-solid fa-plus"></i>
-                            <a href="#">Create Story</a>
+                    <a href="{% url 'create_story' %}">
+                        <div class="create-info">
+                            <img class="shaxsiy_1" src="{{ request.user.profile.avatar.url }}" alt="person">
+                            <div class="hikoya_1">
+                                <i class="fa-solid fa-plus"></i>
+                                <a href="{% url 'create_story' %}">Create Story</a>
+                            </div>
                         </div>
-                    </div>
-                   </a>
+                    </a>
+                    {% for story, is_our_story in stories %}
                     <div class="create-info friend_stories">
-                        <div style="background-image: url({% static 'img/nature.jpg' %});" class="shaxsiy_1">
+                        <div style="background-image: url({{ story.image.url }});" class="shaxsiy_1">
 
-                            <span class="brand"></span>
+                            <span class="brand"
+                                style="background-image: url({{ story.user.profile.avatar.url }});"></span>
+
+                            {% if is_our_story %}
+                            <span class="story_person">Your Story</span>
+                            {% else %}
+                            <span class="story_person">{{ story.user.firstname }} {{ story.user.lastname }}</span>
+                            {% endif %}
                         </div>
                     </div>
-                    <div class="create-info friend_stories">
-                        <div style="background-image: url({% static 'img/rasm2.jpg' %});" class="shaxsiy_1">
-
-                            <span class="brand"></span>
-                        </div>
-                    </div>
-                    <div class="create-info friend_stories">
-                        <div style="background-image: url({% static 'img/nature.jpg' %});" class="shaxsiy_1">
-
-                            <span class="brand"></span>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="live">
@@ -198,7 +195,8 @@
                         <div class="post__top-left--avatar"
                             style="background-image: url({{ post.user.profile.avatar.url }});"></div>
                         <div class="post__top-left--right">
-                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{ post.user.lastname }} -
+                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{
+                                post.user.lastname }} -
                                 <span>Follow</span>
                             </a>
                             <p>{{ post.created_at }} -
@@ -223,7 +221,7 @@
                     <div class="post__content-status">
                         <p style="color: #000;">
                             {% for liked_two in likes_person_two %}
-                                {{ liked_two.user.firstname }} {{liked_two.user.lastname}}
+                            {{ liked_two.user.firstname }} {{liked_two.user.lastname}}
                             {% endfor %}
                             {% if like_count %}and {{like_count}} others{% endif %}</p>
                         <div style="color: #000 !important;">
@@ -282,7 +280,8 @@
                         <div class="post__top-left--avatar"
                             style="background-image: url({{ post.user.profile.avatar.url }});"></div>
                         <div class="post__top-left--right">
-                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{ post.user.lastname }} -
+                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{
+                                post.user.lastname }} -
                                 <span>Follow</span>
                             </a>
                             <p>{{ post.created_at }} -
@@ -309,7 +308,7 @@
                     <div class="post__content-status">
                         <p style="color: #000;">
                             {% for liked_two in likes_person_two %}
-                                {{ liked_two.user.firstname }} {{liked_two.user.lastname}}
+                            {{ liked_two.user.firstname }} {{liked_two.user.lastname}}
                             {% endfor %}
                             and {{like_count_list}} others</p>
                         <div style="color: #000 !important;">
@@ -366,7 +365,8 @@
                         <div class="post__top-left--avatar"
                             style="background-image: url({{ post.user.profile.avatar.url }});"></div>
                         <div class="post__top-left--right">
-                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{ post.user.lastname }} -
+                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{
+                                post.user.lastname }} -
                                 <span>Follow</span>
                             </a>
                             <p>{{ post.created_at }} -
@@ -393,9 +393,9 @@
                     <div class="post__content-status">
                         <p style="color: #000;">
                             {% for liked_two in likes_person_two %}
-                                {{ liked_two.user.firstname }} {{liked_two.user.lastname}}
+                            {{ liked_two.user.firstname }} {{liked_two.user.lastname}}
                             {% endfor %}
-                           and {{like_count_list}} others</p>
+                            and {{like_count_list}} others</p>
                         <div style="color: #000 !important;">
                             {% if comment_k %}
                             <p style="color: #000;">{{ comment_count }}k comments</p>
@@ -451,7 +451,8 @@
                         <div class="post__top-left--avatar"
                             style="background-image: url({{ post.user.profile.avatar.url }});"></div>
                         <div class="post__top-left--right">
-                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{post.user.lastname }} -
+                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }}
+                                {{post.user.lastname }} -
                                 <span>Follow</span>
                             </a>
                             <p>{{ post.created_at }} -
@@ -473,7 +474,7 @@
                     <div class="post__content-status">
                         <p style="color: #000;">
                             {% for liked_two in likes_person_two %}
-                                {{ liked_two.user.firstname }} {{liked_two.user.lastname}}
+                            {{ liked_two.user.firstname }} {{liked_two.user.lastname}}
                             {% endfor %}
                             and {{like_count_list}} others</p>
                         <div style="color: #000 !important;">
