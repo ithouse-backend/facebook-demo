@@ -196,7 +196,12 @@ class HomePage(LoginRequiredMixin, TemplateView):
             context['comment_k'] = comment_k
 
         is_our_stories = []
-        stories = Story.objects.all()
+        m_stories = Story.objects.filter(user=self.request.user)
+        o_stories = Story.objects.exclude(
+            id__in=m_stories.values_list("id", flat=True)).order_by("created_at")
+
+        stories = list(m_stories) + list(o_stories)
+        print(stories)
 
         context['comment_count_list'] = comment_count_list
         context['like_count_list'] = like_count_list
@@ -205,7 +210,7 @@ class HomePage(LoginRequiredMixin, TemplateView):
                 is_our_stories.append(True)
             else:
                 is_our_stories.append(False)
-        context['stories'] = zip(Story.objects.all(), is_our_stories)
+        context['stories'] = zip(stories, is_our_stories)
 
         if is_like and comment_count_list:
             context["videos"] = zip(

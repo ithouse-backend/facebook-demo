@@ -10,7 +10,6 @@ let rightSlider = document.querySelector(
 
 let currentIndex = 0;
 const slideWidth = createInfoSliders[0].offsetWidth;
-console.log(createInfoSliders.length);
 
 function nextSlide() {
   currentIndex++;
