@@ -10,3 +10,12 @@ git push -u origin main -- (har safar jo'natganda)
 git add .
 git commit -m 'habar'
 git push -u origin main 
+
+
+f4:c2:48:78:ab:18
+f8:ab:82:51:33:06
+7e:bf:0f:50:7d:fd
+36:06:ef:6f:64:e5
+e4:24:6c:7a:a8:b1
+f8:8f:07:2d:3e:8f
+20:2b:20:d5:e8:97

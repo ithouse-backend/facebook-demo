@@ -7,6 +7,14 @@ let rightSlider = document.querySelector(".personalaty .fa-chevron-right");
 let currentIndex = 0;
 const slideWidth = createInfoSliders[0].offsetWidth;
 
+if (createInfoSliders.length > 5) {
+  rightSlider.style.display = "flex";
+  leftSlider.style.display = "flex";
+} else {
+  rightSlider.style.display = "none";
+  leftSlider.style.display = "none";
+}
+
 function nextSlide() {
   currentIndex++;
   if (currentIndex >= createInfoSliders.length - 3) {
