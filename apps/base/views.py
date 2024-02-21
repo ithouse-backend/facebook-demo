@@ -196,6 +196,7 @@ class HomePage(LoginRequiredMixin, TemplateView):
             context['comment_k'] = comment_k
 
         is_our_stories = []
+        context['check_stories'] = Story.objects.all()
         m_stories = Story.objects.filter(user=self.request.user)
         o_stories = Story.objects.exclude(
             id__in=m_stories.values_list("id", flat=True)).order_by("created_at")
