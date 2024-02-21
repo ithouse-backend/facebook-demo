@@ -5,17 +5,23 @@ git branch -M main -- (bir marta bitta loyiha uchun)
 git remote add origin https://github.com/pythonhusan/test.git
 git push -u origin main -- (har safar jo'natganda)
 
-// keyin
 
+// keyin
 git add .
 git commit -m 'habar'
-git push -u origin main 
+git push -u origin (main, o'zizi branchiz) 
 
 
-f4:c2:48:78:ab:18
-f8:ab:82:51:33:06
-7e:bf:0f:50:7d:fd
-36:06:ef:6f:64:e5
-e4:24:6c:7a:a8:b1
-f8:8f:07:2d:3e:8f
-20:2b:20:d5:e8:97
+// agar yolg'iz githubda ishlashda
+git status // qanday o'zgarishlar qilindi
+git add . // o'zgartirilgan fayllarni barchasini qo'shish
+git commit -m 'nimalar o'zgartirildi' // har bir o'zgargan fayllar uchun aniq qilingan ishni yozish kerak
+git push origin (main,uktamova,jahongir, hkz..) // bu yerda har birimizni branchimiz yani aynan biz uchun ajratilgan joyga yuborishimiz kerak. 'main' ga yuborishda extiyot bo'ling, eng asosiy branch main bo'ladi
+
+
+// agar github orqali ko'dlarni ko'chirib olmoqchi bo'lsak
+git fetch origin main // bu yerda ko'dlarni ko'chirib bermaydi, lekin githubda nimalar o'zgargan aytib beradi, keyin bir ko'rib chiqamiz, agar hammasi joyida bo'lsa keyin..
+git merge origin/main // githubda o'zgarga barcha fayllarni ko'chirib olamiz
+
+
+git pull origin main // bu 'git fetch origin main' va 'git merge origin/main' ning bittada qilish usuli. bu ham bo'laveradi lekin birinchi ko'rsatilgan usul yaxshiroq. chunki nimalar o'zgargan bilib olib keyin ko'chirib olamiz
