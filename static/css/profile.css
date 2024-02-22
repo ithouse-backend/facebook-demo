@@ -277,3 +277,35 @@
 .modal-dialog {
   max-width: 40%;
 }
+.edit__profile-labels {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.edit__profile-labels label {
+  width: 45%;
+  padding: 6px 0px;
+  text-align: center;
+  background-color: rgba(35, 182, 223, 0.2);
+  border-radius: 5px;
+  color: #1f211f;
+  cursor: pointer;
+}
+.edit__profile-labels i {
+  color: #1f211f;
+  font-size: 14px;
+  background-color: transparent;
+  padding: 0px;
+  height: inherit;
+  margin: 0;
+}
+.edit__profile-labels label:nth-child(3) {
+  width: 10%;
+  background-color: rgba(0, 0, 0, 0.1);
+  margin-left: 10px;
+}
+.edit__profile-labels label:nth-child(2) {
+  background-color: rgba(0, 0, 0, 0.1);
+  margin-left: 10px;
+}

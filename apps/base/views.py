@@ -196,22 +196,43 @@ class HomePage(LoginRequiredMixin, TemplateView):
             context['comment_k'] = comment_k
 
         is_our_stories = []
-        context['check_stories'] = Story.objects.all()
-        m_stories = Story.objects.filter(user=self.request.user)
-        o_stories = Story.objects.exclude(
-            id__in=m_stories.values_list("id", flat=True)).order_by("created_at")
 
-        stories = list(m_stories) + list(o_stories)
-        print(stories)
+        if Friendship.objects.filter(Q(user1=self.request.user) | Q(user2=self.request.user)):
+            for user in Friendship.objects.filter(Q(user1=self.request.user) | Q(user2=self.request.user)):
+                m_stories = Story.objects.filter(
+                    user=self.request.user)  # mening storyim
+                o_stories = Story.objects.exclude(id__in=m_stories.values_list("id", flat=True)).filter(
+                    Q(user=user.user1) |
+                    Q(user=user.user2)
+                ).order_by("created_at")
 
+                stories = list(m_stories) + list(o_stories)
+                for story in stories:
+                    if story.user == self.request.user:
+                        is_our_stories.append(True)
+                    else:
+                        is_our_stories.append(False)
+                context['check_stories'] = Story.objects.filter(
+                    Q(user=self.request.user) |
+                    Q(user=user.user1) |
+                    Q(user=user.user2)
+                )
+                context['stories'] = zip(stories, is_our_stories)
+        else:
+            m_stories = Story.objects.filter(
+                user=self.request.user)
+            stories = list(m_stories)
+            for story in stories:
+                if story.user == self.request.user:
+                    is_our_stories.append(True)
+                else:
+                    is_our_stories.append(False)
+            context['check_stories'] = Story.objects.filter(
+                Q(user=self.request.user)
+            )
+            context['stories'] = zip(stories, is_our_stories)
         context['comment_count_list'] = comment_count_list
         context['like_count_list'] = like_count_list
-        for story in stories:
-            if story.user == self.request.user:
-                is_our_stories.append(True)
-            else:
-                is_our_stories.append(False)
-        context['stories'] = zip(stories, is_our_stories)
 
         if is_like and comment_count_list:
             context["videos"] = zip(
