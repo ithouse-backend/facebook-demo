@@ -309,3 +309,63 @@
   background-color: rgba(0, 0, 0, 0.1);
   margin-left: 10px;
 }
+.submit__avatar-button {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  align-items: flex-start;
+  position: absolute;
+  top: 480px;
+  right: 20px;
+}
+.submit__banner-button {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  align-items: flex-start;
+  position: absolute;
+  top: 480px;
+  right: 20px;
+}
+.submit__avatar-button button {
+  padding: 6px 40px;
+  background-color: #0866ff;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+}
+.submit__banner-button button {
+  padding: 6px 40px;
+  background-color: #0866ff;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+}
+#profile_update-banner .edit__profile-labels {
+  display: flex;
+  flex-direction: column !important;
+  justify-content: left;
+  align-items: flex-start;
+}
+#profile_update-banner label {
+  margin: 0;
+  margin-top: 20px;
+  background-color: transparent;
+  border: none;
+  justify-content: left;
+  text-align: left;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  font-weight: 700;
+}
+#profile_update-banner i {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(204, 204, 204, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
