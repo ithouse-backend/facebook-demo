@@ -96,27 +96,26 @@ def user_profile(request, user_id):
     ).count()
     user = User.objects.get(unique_id=user_id)
     if request.method == 'POST' and request.user:
-        user_update = UpdateUserForm(request.POST, instance=request.user)
-        profile_update = UpdateProfilForm(
-            request.POST, request.FILES, instance=request.user.profile)
+        avatar_change = request.FILES.get("profile__change-avatar")
+        banner_change = request.FILES.get("profile__change-banner")
         about_update = UpdateAboutForm(
             request.POST, instance=request.user.about)
-        if user_update.is_valid() and profile_update.is_valid():
-            user_update.save()
-            profile_update.save()
-            return redirect('/')
 
         if about_update.is_valid():
             about_update.save()
             return redirect("/")
+        if avatar_change:
+            profile = Profile.objects.get(user=request.user)
+            profile.avatar = avatar_change
+            profile.save()
+        if banner_change:
+            profile = Profile.objects.get(user=request.user)
+            profile.banner = banner_change
+            profile.save()
     else:
-        user_update = UpdateUserForm(instance=request.user)
-        profile_update = UpdateProfilForm(instance=request.user)
         about_update = UpdateAboutForm(instance=request.user)
 
     context = {
-        "user_update": user_update,
-        "profile_update": profile_update,
         "about_update": about_update,
         "user": user,
         "friends": friends
