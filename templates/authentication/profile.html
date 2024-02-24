@@ -23,7 +23,8 @@
             </h2>
             {% endif %}
             <div>
-                <a href="{% url 'create_story' %}" class="btn btn-primary"><i class="fa-solid fa-plus fa-custom"></i> Add to story</a>
+                <a href="{% url 'create_story' %}" class="btn btn-primary"><i class="fa-solid fa-plus fa-custom"></i>
+                    Add to story</a>
                 <button class="btn btn-light ms-1" data-bs-toggle="modal" data-bs-target="#profile_update">
                     <i class="fa-solid fa-pen"></i>Edit profile</button>
                 <button class="btn btn-light"><i class="fa-solid fa-chevron-down"></i></button>
@@ -115,38 +116,98 @@
             <div class="modal-body">
                 <div class="edit__top">
                     <h1>Profile Picture</h1>
-                    <a href="#">Edit</a>
+                    <a data-bs-toggle="modal" data-bs-target="#profile_update-inner" href="#">Edit</a>
                 </div>
                 <div class="avatar_modal" style="background-image: url({{ request.user.profile.avatar.url }});">
 
                 </div>
                 <div class="edit__top">
                     <h1>Cover Photo</h1>
-                    <a href="#">Edit</a>
+                    <a href="#" data-bs-target="#profile_update-banner" data-bs-toggle="modal">Edit</a>
                 </div>
                 <div class="avatar_modal banner_modal"
                     style="background-image: url({{ request.user.profile.banner.url }});">
                 </div>
-                <form method="POST" style="height: 600px; width: 90%; margin: 20px 0;" class="mx-auto"
-                    enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class=" d-flex justify-content-between">
-                        {% render_field user_update.firstname class+="form-control me-1" %}
-                        {% render_field user_update.lastname class+="form-control ms-1" %}
-                    </div>
-                    {% render_field user_update.birthday class+="form-control my-2" %}
-                    {% render_field user_update.gender class+="form-control" %}
-                    <div class="d-flex align-items-center">
-                        {% render_field profile_update.banner class+="form-control my-2 me-1" %}
-                        {% render_field profile_update.avatar class+="form-control ms-1" %}
-                    </div>
-                    {% render_field profile_update.bio class+="form-control" %}
-                    <button type="submit" class="btn btn-success mx-auto w-100 mt-2">Update</button>
-                </form>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" style="background-color: rgba(255, 255, 255, 0.9);" tabindex="-1" id="profile_update-inner"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border: none; width: 97%;">
+            <div class="modal-header">
+                <h5 class="modal-title text-center">Upload Photo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" enctype="multipart/form-data" style="position: relative;">
+                    {% csrf_token %}
+                    <div class="edit__profile-labels">
+                        <label for="edit__avatar-label">
+                            <i class="fa-solid fa-plus"></i>
+                            Upload Photo
+                        </label>
+                        <label for="">
+                            <i class="fa-solid fa-calendar"></i>
+                            Add Frame
+                        </label>
+                        <label for="">
+                            <i class="fa-solid fa-pen"></i>
+                        </label>
+                        <input type="file" accept="image/*" style="display: none;" id="edit__avatar-label"
+                            name="profile__change-avatar">
+                    </div>
+                    <div class="submit__avatar-button">
+                        <button>Save</button>
+                    </div>
+                </form>
+                <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+                    <img class="preview-image" src="" alt="no image"
+                        style="width: 90%; margin-left: auto; margin-right: auto; object-fit: cover; height: 400px; margin-top: 30px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" style="background-color: rgba(255, 255, 255, 0.9);" tabindex="-1" id="profile_update-banner"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border: none; width: 80%; margin-left: auto; margin-right: auto;">
+            <div class="modal-header">
+                <h5 class="modal-title text-center">Upload Photo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <dziv class="modal-body">
+                <form method="POST" enctype="multipart/form-data" style="position: relative;">
+                    {% csrf_token %}
+                    <div class="edit__profile-labels edit__profile-labels-banner">
+                        <label for="">
+                            <i class="fa-solid fa-calendar"></i>
+                            Select Photo
+                        </label>
+                        <label for="edit__banner-label">
+                            <i class="fa-solid fa-plus"></i>
+                            Upload Photo
+                        </label>
+                        <input type="file" accept="image/*" style="display: none;" id="edit__banner-label"
+                            name="profile__change-banner">
+                    </div>
+                    <div class="submit__banner-button">
+                        <button>Save</button>
+                    </div>
+                </form>
+                <div style="width: 100%;  display: flex; justify-content: center; align-items: center;">
+                    <img class="preview-image-banner" src="" alt="no image"
+                        style="width: 90%; margin-left: auto; margin-right: auto; object-fit: cover; height: 400px; margin-top: 30px;">
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+
 <div class="modal fade" tabindex="-1" id="edit_about" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -206,4 +267,50 @@
     </div>
 </div>
 {% endif %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const inputFile = document.querySelector("#edit__avatar-label")
+        const imagePre = document.querySelector(".preview-image")
+        const button = document.querySelector(".submit__avatar-button")
+        // banner
+        const inputBannerFile = document.querySelector("#edit__banner-label")
+        const imageBannerPre = document.querySelector(".preview-image-banner")
+        const buttonBanner = document.querySelector(".submit__banner-button")
+        const bannerLabels = document.querySelector(".edit__profile-labels-banner")
+
+        imagePre.style.display = 'none'
+        button.style.display = 'none'
+
+        imageBannerPre.style.display = 'none'
+        buttonBanner.style.display = 'none'
+
+        inputFile.addEventListener("change", () => {
+            let [file] = inputFile.files
+            if (file) {
+                let reader = new FileReader()
+                reader.onload = (a) => {
+                    imagePre.src = a.target.result
+                }
+                imagePre.style.display = 'block'
+                button.style.display = 'flex'
+                reader.readAsDataURL(file)
+            }
+        })
+
+        inputBannerFile.addEventListener("change", () => {
+            let [file] = inputBannerFile.files
+            console.log([file]);
+            if (file) {
+                let reader = new FileReader()
+                reader.onload = (a) => {
+                    imageBannerPre.src = a.target.result
+                }
+                imageBannerPre.style.display = 'block'
+                buttonBanner.style.display = 'flex'
+                bannerLabels.style.display = 'none'
+                reader.readAsDataURL(file)
+            }
+        })
+    })
+</script>
 {% endblock %}

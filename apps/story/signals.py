@@ -5,9 +5,9 @@ from .models import Story
 
 @receiver(post_save, sender=Story)
 def check_and_delete_expired_stories(sender, instance, created, **kwargs):
-    """
-    Auto o'chiradi agar is_expired true bo'lsa va is_expired modelsda yozilgan
-    """
-    if created:  # Only check for expiration on newly created stories
+    if created:
         if instance.is_expired():
-            instance.delete()
+            try:
+                instance.delete()
+            except Exception as e:
+                print(f"Error deleting expired story: {e}")

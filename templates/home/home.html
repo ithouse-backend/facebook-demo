@@ -3,6 +3,15 @@
 {% block content %}
 <div class="section">
     <div class="section_middle_on">
+        <!-- media telefon uchun -->
+        <div class="home__phone__top">
+            <h1>facebook</h1>
+            <div>
+                <i class="fa-solid fa-search"></i>
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+        <!-- media telefon uchun -->
         <div class="person">
             <div class="person-mini">
                 <div class="person-1 custom_1">
@@ -132,7 +141,7 @@
             </div>
         </div>
         {% else %}
-        <div style="position: relative; top: 80px; width: 680px;">
+        <div style="position: relative; top: 80px; width: 680px;" class="middle">
             {% if check_stories %}
             <div class="personalaty">
                 <i class="fa-solid fa-chevron-left"></i>
@@ -211,7 +220,8 @@
                         <div class="post__top-left--avatar"
                             style="background-image: url({{ post.user.profile.avatar.url }});"></div>
                         <div class="post__top-left--right">
-                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{post.user.lastname }} -
+                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }}
+                                {{post.user.lastname }} -
                                 <span>Follow</span>
                             </a>
                             <p>{{ post.created_at }} -
@@ -295,7 +305,8 @@
                         <div class="post__top-left--avatar"
                             style="background-image: url({{ post.user.profile.avatar.url }});"></div>
                         <div class="post__top-left--right">
-                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{post.user.lastname }} -
+                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }}
+                                {{post.user.lastname }} -
                                 <span>Follow</span>
                             </a>
                             <p>{{ post.created_at }} -
@@ -379,7 +390,8 @@
                         <div class="post__top-left--avatar"
                             style="background-image: url({{ post.user.profile.avatar.url }});"></div>
                         <div class="post__top-left--right">
-                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{post.user.lastname }} -
+                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }}
+                                {{post.user.lastname }} -
                                 <span>Follow</span>
                             </a>
                             <p>{{ post.created_at }} -
@@ -464,7 +476,8 @@
                         <div class="post__top-left--avatar"
                             style="background-image: url({{ post.user.profile.avatar.url }});"></div>
                         <div class="post__top-left--right">
-                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{post.user.lastname }} -
+                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }}
+                                {{post.user.lastname }} -
                                 <span>Follow</span>
                             </a>
                             <p>{{ post.created_at }} -
