@@ -1,4 +1,10 @@
+.phone {
+  display: none;
+}
 @media (min-width: 200px) and (max-width: 450px) {
+  .phone {
+    display: block;
+  }
   .section_main {
     display: none;
   }
@@ -41,12 +47,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 15px;
+    font-size: 22px;
     background-color: rgba(204, 204, 204, 0.4);
     border-radius: 50%;
     margin-right: 5px;
   }
   .home__phone__top h1 {
-    color: blue;
+    color: #0866ff;
+    font-weight: 700;
   }
 }
