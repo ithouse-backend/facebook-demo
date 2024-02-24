@@ -18,3 +18,7 @@ def create_story(request):
         'stories': stories
     }
     return render(request, 'home/create_story.html', context)
+
+
+def story_detail(request, storyID):
+    return render(request, "includes/story_content.html")

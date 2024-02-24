@@ -1,0 +1,47 @@
+{% extends 'story/story_detail.html' %}
+
+{% block story %}
+<div class="story_post">
+    <div id="progress-bar">
+        <div id="progress"></div>
+    </div>
+    <div class="story_post-top">
+        <div>
+            <img src="{{ request.user.profile.avatar.url }}" alt="">
+            <h2>
+                {{ request.user.firstname }}
+                {{ request.user.lastname }}
+                <span>1 h</span>
+                <i class="fa-solid fa-user-group"></i>
+            </h2>
+        </div>
+        <div>
+            <i class="fa-solid fa-play"></i>
+            <i class="fa-solid fa-volume-low"></i>
+            <i class="fa-solid fa-ellipsis"></i>
+        </div>
+    </div>
+</div>
+<script>
+    // Adjust the time (in milliseconds) for how long the story will be displayed
+    const STORY_DURATION = 6000; // 5 seconds
+
+    // Get the progress bar element
+    const progressBar = document.getElementById('progress');
+
+    // Calculate the increment for the progress bar
+    const increment = 100 / (STORY_DURATION / 100); // Increment for every 100 milliseconds
+
+    // Start the timer
+    let progress = 0;
+    const timer = setInterval(() => {
+        progress += increment;
+        progressBar.style.width = progress + '%';
+        if (progress >= 100) {
+            clearInterval(timer);
+            // Redirect to another URL after the story duration
+            // window.location.href = 'other_url.html';
+        }
+    }, 100); // Update progress bar every 100 milliseconds
+</script>
+{% endblock %}

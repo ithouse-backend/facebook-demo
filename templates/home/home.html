@@ -158,19 +158,21 @@
                         </div>
                     </a>
                     {% for story, is_our_story in stories %}
-                    <div class="create-info friend_stories">
-                        <div style="background-image: url({{ story.image.url }});" class="shaxsiy_1">
+                    <a href="{% url 'story_detail' story.id %}">
+                        <div class="create-info friend_stories">
+                            <div style="background-image: url({{ story.image.url }});" class="shaxsiy_1">
 
-                            <span class="brand"
-                                style="background-image: url({{ story.user.profile.avatar.url }});"></span>
+                                <span class="brand"
+                                    style="background-image: url({{ story.user.profile.avatar.url }});"></span>
 
-                            {% if is_our_story %}
-                            <span class="story_person">Your Story</span>
-                            {% else %}
-                            <span class="story_person">{{ story.user.firstname }} {{ story.user.lastname }}</span>
-                            {% endif %}
+                                {% if is_our_story %}
+                                <span class="story_person">Your Story</span>
+                                {% else %}
+                                <span class="story_person">{{ story.user.firstname }} {{ story.user.lastname }}</span>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
+                    </a>
                     {% endfor %}
                 </div>
                 <i class="fa-solid fa-chevron-right"></i>
