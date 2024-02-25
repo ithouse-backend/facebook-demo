@@ -8,6 +8,9 @@
   justify-content: center;
   align-items: flex-start;
 }
+img {
+  object-fit: cover !important;
+}
 .story_detail-right {
   position: absolute;
   right: 10px;
@@ -41,11 +44,14 @@
   align-items: center;
 }
 .story_post {
-  width: 26%;
+  max-width: 26%;
+  max-height: 90vh;
   height: 90vh;
+  width: 26%;
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: 10px;
   position: relative;
+  overflow: hidden;
 }
 #progress-bar {
   width: 95%;
@@ -68,7 +74,9 @@
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  align-items: flex-start;
+  align-items: center;
+  position: relative;
+  z-index: 3;
 }
 .story_post-top h2 {
   color: #fff;
@@ -82,19 +90,40 @@
 .story_post-top h2 i {
   font-size: 10px;
   position: absolute;
-  right: -7px;
+  right: -15px;
 }
 .story_post-top img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   margin-right: 10px;
+  object-fit: cover;
 }
 .story_post-top > div:first-child {
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
 }
 .story_post-top {
   padding-top: 40px;
+}
+.story_post-top div:nth-child(2) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90px;
+}
+.story_post-top div:nth-child(2) i {
+  font-size: 22px;
+  color: #fff;
+  cursor: pointer;
+}
+#story_image {
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 100%;
+  max-height: 100vh;
 }

@@ -21,4 +21,8 @@ def create_story(request):
 
 
 def story_detail(request, storyID):
-    return render(request, "includes/story_content.html")
+    story = Story.objects.get(id=storyID)
+    context = {
+        "story": story
+    }
+    return render(request, "includes/story_content.html", context)

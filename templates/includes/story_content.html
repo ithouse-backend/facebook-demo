@@ -16,25 +16,39 @@
             </h2>
         </div>
         <div>
-            <i class="fa-solid fa-play"></i>
+            <i class="fa-solid fa-play" id="playButton" style="display: none;"></i>
+            <i class="fa-solid fa-pause" id="pauseButton"></i>
             <i class="fa-solid fa-volume-low"></i>
             <i class="fa-solid fa-ellipsis"></i>
         </div>
     </div>
+
+    <img src="{{ story.image.url }}" alt="" id="story_image">
+
 </div>
+
 <script>
     // Adjust the time (in milliseconds) for how long the story will be displayed
     const STORY_DURATION = 6000; // 5 seconds
 
     // Get the progress bar element
     const progressBar = document.getElementById('progress');
+    const pauseButton = document.getElementById('pauseButton');
+    const playButton = document.getElementById('playButton');
+    const volumeLow = document.querySelector(".story_post-top .fa-volume-low")
+
+    volumeLow.addEventListener("click", () => {
+        volumeLow.classList.toggle("fa-volume-xmark")
+    })
 
     // Calculate the increment for the progress bar
     const increment = 100 / (STORY_DURATION / 100); // Increment for every 100 milliseconds
 
-    // Start the timer
     let progress = 0;
-    const timer = setInterval(() => {
+    let timer; // Declare the timer variable outside to make it accessible to both pause and play functions
+
+    // Function to update the progress bar
+    function updateProgressBar() {
         progress += increment;
         progressBar.style.width = progress + '%';
         if (progress >= 100) {
@@ -42,6 +56,24 @@
             // Redirect to another URL after the story duration
             // window.location.href = 'other_url.html';
         }
-    }, 100); // Update progress bar every 100 milliseconds
+    }
+
+    // Start the timer
+    timer = setInterval(updateProgressBar, 100); // Update progress bar every 100 milliseconds
+
+    // Event listener for pause button
+    pauseButton.addEventListener('click', function () {
+        clearInterval(timer);
+        playButton.style.display = 'block'
+        pauseButton.style.display = 'none'
+    });
+
+    // Event listener for play button
+    playButton.addEventListener('click', function () {
+        timer = setInterval(updateProgressBar, 100);
+        pauseButton.style.display = 'block'
+        playButton.style.display = 'none'
+    });
 </script>
+
 {% endblock %}
