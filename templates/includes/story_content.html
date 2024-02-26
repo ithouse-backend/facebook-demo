@@ -26,9 +26,11 @@
     <img src="{{ story.image.url }}" alt="" id="story_image">
 
 </div>
+<a>
+    <i class="fa-solid fa-chevron-right" id="nextStory"></i>
+</a>
 
 <script>
-    // Adjust the time (in milliseconds) for how long the story will be displayed
     const STORY_DURATION = 6000; // 5 seconds
 
     // Get the progress bar element
@@ -74,6 +76,38 @@
         pauseButton.style.display = 'block'
         playButton.style.display = 'none'
     });
+
+
+
+    $(document).ready(function () {
+        const nextStoryButton = $('#nextStory');
+
+        // Event listener for clicking the next story button
+        nextStoryButton.on('click', function () {
+            // Make AJAX request to fetch the next story's ID
+            $.ajax({
+                url: '{% url "story_detail" story.id %}',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    const nextStoryId = data.next_story_id;
+                    if (nextStoryId) {
+                        // Use AJAX to fetch the content of the next story
+                        // and update the DOM with the new content
+                        // You can implement this part as needed based on your application's structure
+                        console.log("Next story ID:", nextStoryId);
+                    } else {
+                        // Redirect to the homepage if there's no next story
+                        window.location.href = '/';
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    });
+
 </script>
 
 {% endblock %}
