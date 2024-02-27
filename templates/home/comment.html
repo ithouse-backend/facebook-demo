@@ -8,41 +8,39 @@ position: absolute;
 z-index: 2;
 ">
 </div>
-<div class="post__top--exit" style="
-width: 600px;
-transform: scale(0.75);
-margin-left: auto;
-margin-right: auto;
-height: 60px;
-background-color: #000;
-position: absolute;
-top: 95px;
-z-index: 4;
-left: 31%;
-border-bottom: 1px solid #ccc;
-border-top-right-radius: 5px;
-border-top-left-radius: 5px;
-display: flex;
-justify-content: center;
-align-items: center;
-">
-    <h2 style="font-size: 25px; text-align: center; color: #fff; margin: 0;">{{ post.user.firstname }}'s posts</h2>
-    <a href="/home/" class="fa-solid fa-xmark"
-        style="position: absolute; right: 10px; text-decoration: none; font-size: 24px; color: #fff;">
-    </a>
-</div>
 
 {% if not is_video %}
 {% if is_text %}
 <div class="post"
-    style="height: auto; max-height: 700px; overflow-y: scroll; width: 400px !important; margin-left: auto; margin-right: auto; margin-top: 70px; position: absolute; top: 80px; left: 31%; z-index: 3; color: #fff; background-color: #242526;">
+    style="height: auto; max-height: 700px; overflow-y: scroll; width: 45% !important; margin-left: auto; margin-right: auto; margin-top: 70px; position: absolute; top: 80px; left: 31%; z-index: 3; color: #fff; background-color: #242526;">
+    <div class="post__top--exit" style="
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #000;
+    padding: 10px !important;
+    margin-bottom: 5px;
+    /* position: absolute;
+    z-index: 4;
+    left: 31%; */
+    border-bottom: 1px solid #ccc;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    ">
+        <h2 style="font-size: 25px; text-align: center; color: #fff; margin: 0;">{{ post.user.firstname }}'s posts</h2>
+        <a href="/home/" class="fa-solid fa-xmark"
+            style="position: absolute; right: 10px; text-decoration: none; font-size: 24px; color: #fff;">
+        </a>
+    </div>
     <div class="post__top">
         <div class="post__top-left">
             <div class="post__top-left--avatar" style="background-image: url({{ post.user.profile.avatar.url }});">
             </div>
             <div class="post__top-left--right">
-                <a style="color: #fff;" href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{
-                    post.user.lastname }} -
+                <a style="color: #fff;" href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{ post.user.lastname }} -
                     <span>Follow</span>
                 </a>
                 <p>{{ post.created_at }} -
@@ -56,7 +54,7 @@ align-items: center;
     </div>
     <div class="post__content">
         <p>{{ post.content }}</p>
-        <div class="post__content-status">
+        <div class="post__content-status" style="position: relative; bottom: auto;">
             <p id="liked_user">
                 {% if like_count > 2 %}and {{like_count}} others{% endif %}
             </p>
@@ -73,7 +71,7 @@ align-items: center;
                 <p>400 shares</p>
             </div>
         </div>
-        <div class="post__content-bottom">
+        <div class="post__content-bottom" style="position: relative; bottom: auto;">
             <div class="post__content-bottom--box">
                 <button id="post_like_submit" data-post-id="{{ post.id }}">
                     {% if is_like %}
@@ -109,12 +107,10 @@ align-items: center;
                         <!-- d,D,M,m,Y,F,l -->
                         {% if time_day %}
                         <span data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{
-                            time }}d</span>
+                            title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{ time }}d</span>
                         {% else %}
                         <span data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{
-                            time }}h</span>
+                            title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{ time }}h</span>
                         {% endif %}
                         <span>Like</span>
                         <span>Reply</span>
@@ -124,7 +120,7 @@ align-items: center;
             </div>
             {% endfor %}
         </div>
-        <form class="post__content-input" style="margin: 14px 0px;">
+        <form class="post__content-input" style="margin: 14px 0px; position: relative;">
             {% csrf_token %}
             <span id="get_post_id_for_comment" style="display: none;" data-post-id="{{ post.id }}"></span>
             <div class="post__content-input--avatar"
@@ -141,14 +137,35 @@ align-items: center;
 </div>
 {% else %}
 <div class="post"
-    style="transform: scale(0.75); overflow-y: scroll; width: 600px; margin-left: auto; margin-right: auto; margin: 0; position:  absolute; top: 58px; left: 31%; z-index: 3; color: #fff; background-color: #242526;">
+    style="transform: scale(0.8); overflow-y: scroll; width: 45%; margin-left: auto; margin-right: auto; margin: 0; position:  absolute; top: 0; left: 28%; z-index: 3; color: #fff; background-color: #242526;">
+    <div class="post__top--exit" style="
+width: 100%;
+margin-left: auto;
+margin-right: auto;
+background-color: #000;
+padding: 10px !important;
+margin-bottom: 5px;
+/* position: absolute;
+z-index: 4;
+left: 31%; */
+border-bottom: 1px solid #ccc;
+border-top-right-radius: 5px;
+border-top-left-radius: 5px;
+display: flex;
+justify-content: center;
+align-items: center;
+">
+    <h2 style="font-size: 25px; text-align: center; color: #fff; margin: 0;">{{ post.user.firstname }}'s posts</h2>
+    <a href="/home/" class="fa-solid fa-xmark"
+        style="position: absolute; right: 10px; text-decoration: none; font-size: 24px; color: #fff;">
+    </a>
+</div>
     <div class="post__top">
         <div class="post__top-left">
             <div class="post__top-left--avatar" style="background-image: url({{ post.user.profile.avatar.url }});">
             </div>
             <div class="post__top-left--right">
-                <a style="color: #fff;" href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{
-                    post.user.lastname }} -
+                <a style="color: #fff;" href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{ post.user.lastname }} -
                     <span>Follow</span>
                 </a>
                 <p>{{ post.created_at }} -
@@ -164,7 +181,7 @@ align-items: center;
         <p>{{ post.content }}</p>
         <img src="{{ post.content_object.file.url }}" class="post__content-image" alt="">
     </div>
-    <div class="post__content-status">
+    <div class="post__content-status" style="position: relative; bottom: auto;">
         <p id="liked_user">
             {% if like_count > 2 %}and {{like_count}} others{% endif %}
         </p>
@@ -181,7 +198,7 @@ align-items: center;
             <p>400 shares</p>
         </div>
     </div>
-    <div class="post__content-bottom" style="border: none; margin-bottom: 10px;">
+    <div class="post__content-bottom" style="border: none; margin-bottom: 10px; position: relative;">
         <div class="post__content-bottom--box">
             <button id="post_like_submit" data-post-id="{{ post.id }}">
                 {% if is_like %}
@@ -208,7 +225,7 @@ align-items: center;
                 style="background-image: url({{ comment.user.profile.avatar.url }});">
             </div>
             <div class="post__comment-text">
-                <a href="#">
+                <a href="#" style="color: #fff;">
                     {{ comment.user.firstname }}
                     {{ comment.user.lastname}}
                 </a>
@@ -217,12 +234,10 @@ align-items: center;
                     <!-- d,D,M,m,Y,F,l -->
                     {% if time_day %}
                     <span data-bs-toggle="tooltip" data-bs-placement="bottom"
-                        title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{
-                        time }}d</span>
+                        title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{ time }}d</span>
                     {% else %}
                     <span data-bs-toggle="tooltip" data-bs-placement="bottom"
-                        title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{
-                        time }}h</span>
+                        title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{ time }}h</span>
                     {% endif %}
                     <span>Like</span>
                     <span>Reply</span>
@@ -232,7 +247,7 @@ align-items: center;
         </div>
         {% endfor %}
     </div>
-    <form class="post__content-input" style="margin: 14px 0px;">
+    <form class="post__content-input" style="margin: 14px 0px; position: relative;">
         {% csrf_token %}
         <span id="get_post_id_for_comment" style="display: none;" data-post-id="{{ post.id }}"></span>
         <div class="post__content-input--avatar" style="background-image: url({{ request.user.profile.avatar.url }});">
@@ -240,7 +255,6 @@ align-items: center;
         <input type="text" id="comment_input_data" placeholder="Write a comment..."
             style="color: #fff; border: 1px solid #ccc;">
     </form>
-</div>
 </div>
 {% endif %}
 {% else %}
@@ -402,7 +416,7 @@ align-items: center;
                             `<div class="post__comment">
                             <div class="post__top-left--avatar post__comment-img" style="background-image: url(${profileImageUrl});"></div>
                                                   <div class="post__comment-text">
-                                                    <a href="#">
+                                                    <a href="#" style='color: #fff;'>
                                                         ${comment['comment_firstname']}
                                                         ${comment['comment_lastname']}
                                                     </a>
@@ -421,7 +435,7 @@ align-items: center;
                             `<div class="post__comment">
                             <div class="post__top-left--avatar post__comment-img" style="background-image: url(${profileImageUrl});"></div>
                                                   <div class="post__comment-text">
-                                                    <a href="#">
+                                                    <a href="#" style='color: #fff;'>
                                                         ${comment['comment_firstname']}
                                                         ${comment['comment_lastname']}
                                                     </a>

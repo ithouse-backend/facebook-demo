@@ -218,7 +218,7 @@
             {% for post, true, hide_post, is_like, comment_count, like_count_list in videos %}
             {% if not hide_post %}
             {% if true %}
-            <div class="post" style="height: auto; padding-bottom: 10px;">
+            <div class="post" style="padding-bottom: 10px;">
                 <div class="post__top">
                     <div class="post__top-left">
                         <div class="post__top-left--avatar"
@@ -302,7 +302,7 @@
             </div>
             {% else %}
             {% if post.content_object %}
-            <div class="post" style="height: auto; padding-bottom: 10px;">
+            <div class="post" style="padding-bottom: 10px;">
                 <div class="post__top">
                     <div class="post__top-left">
                         <div class="post__top-left--avatar"
@@ -409,7 +409,7 @@
                 </div>
                 <div class="post__content">
                     <p>{{ post.content }}</p>
-                    <div class="post__content-status">
+                    <div class="post__content-status" style="position: relative !important; bottom: auto;">
                         <p style="color: #000;">
                             {% for liked_two in likes_person_two %}
                             {{ liked_two.user.firstname }} {{liked_two.user.lastname}}
@@ -428,7 +428,7 @@
                             <p style="color: #000;">400 shares</p>
                         </div>
                     </div>
-                    <div class="post__content-bottom">
+                    <div class="post__content-bottom" style="position: relative;">
                         <form class="post__content-bottom--box" method="post">
                             {% csrf_token %}
                             <button type="submit" style="color: #000;">
@@ -455,7 +455,7 @@
                             <p>Share</p>
                         </div>
                     </div>
-                    <form class="post__content-input">
+                    <form class="post__content-input" style="position: relative;">
                         <div class="post__content-input--avatar"
                             style="background-image: url({{ request.user.profile.avatar.url }});"></div>
                         <input type="text" placeholder="Write a comment...">
