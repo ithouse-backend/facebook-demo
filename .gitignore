@@ -1,8 +1,9 @@
 .venv
 .environment
-__pycache__
+__pycache__/
 .muhit
 muhit
 env
 .env
 db.sqlite3
+media/
