@@ -107,7 +107,7 @@ class User(AbstractBaseUser):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     banner = models.ImageField(
-        upload_to="profile/", blank=True, default="banner2.jpg")
+        upload_to="profile/", blank=True, default="banner2.png")
     avatar = models.ImageField(
         upload_to="profile/", blank=True, default="avatar.png")
     bio = models.TextField(blank=True)
