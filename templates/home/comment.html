@@ -9,7 +9,8 @@ z-index: 2;
 ">
 </div>
 <div class="post__top--exit" style="
-width: 650px;
+width: 600px;
+transform: scale(0.75);
 margin-left: auto;
 margin-right: auto;
 height: 60px;
@@ -34,13 +35,14 @@ align-items: center;
 {% if not is_video %}
 {% if is_text %}
 <div class="post"
-    style="height: auto; max-height: 700px; overflow-y: scroll; width: 650px; margin-left: auto; margin-right: auto; margin-top: 70px; position: absolute; top: 80px; left: 31%; z-index: 3; color: #fff; background-color: #242526;">
+    style="height: auto; max-height: 700px; overflow-y: scroll; width: 400px !important; margin-left: auto; margin-right: auto; margin-top: 70px; position: absolute; top: 80px; left: 31%; z-index: 3; color: #fff; background-color: #242526;">
     <div class="post__top">
         <div class="post__top-left">
             <div class="post__top-left--avatar" style="background-image: url({{ post.user.profile.avatar.url }});">
             </div>
             <div class="post__top-left--right">
-                <a style="color: #fff;" href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{ post.user.lastname }} -
+                <a style="color: #fff;" href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{
+                    post.user.lastname }} -
                     <span>Follow</span>
                 </a>
                 <p>{{ post.created_at }} -
@@ -94,7 +96,8 @@ align-items: center;
         <div class="post__comment-wrapper">
             {% for comment, time, time_day in comments %}
             <div class="post__comment">
-                <div class="post__top-left--avatar post__comment-img" style="background-image: url({{ comment.user.profile.avatar.url }});">
+                <div class="post__top-left--avatar post__comment-img"
+                    style="background-image: url({{ comment.user.profile.avatar.url }});">
                 </div>
                 <div class="post__comment-text">
                     <a href="#">
@@ -105,9 +108,13 @@ align-items: center;
                     <div>
                         <!-- d,D,M,m,Y,F,l -->
                         {% if time_day %}
-                        <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{ time }}d</span>
+                        <span data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{
+                            time }}d</span>
                         {% else %}
-                        <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{ time }}h</span>
+                        <span data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{
+                            time }}h</span>
                         {% endif %}
                         <span>Like</span>
                         <span>Reply</span>
@@ -122,7 +129,8 @@ align-items: center;
             <span id="get_post_id_for_comment" style="display: none;" data-post-id="{{ post.id }}"></span>
             <div class="post__content-input--avatar"
                 style="background-image: url({{ request.user.profile.avatar.url }});"></div>
-            <input type="text" id="comment_input_data" placeholder="Write a comment..." style="color: #fff; border: 1px solid #ccc;">
+            <input type="text" id="comment_input_data" placeholder="Write a comment..."
+                style="color: #fff; border: 1px solid #ccc;">
             <i class="fa-solid fa-umbrella-beach"></i>
             <i class="fa-solid fa-vector-square"></i>
             <i class="fa-regular fa-face-smile"></i>
@@ -133,13 +141,14 @@ align-items: center;
 </div>
 {% else %}
 <div class="post"
-    style="height: 700px; overflow-y: scroll; width: 650px; margin-left: auto; margin-right: auto; margin-top: 70px; position: absolute; top: 80px; left: 31%; z-index: 3; color: #fff; background-color: #242526;">
+    style="transform: scale(0.75); overflow-y: scroll; width: 600px; margin-left: auto; margin-right: auto; margin: 0; position:  absolute; top: 58px; left: 31%; z-index: 3; color: #fff; background-color: #242526;">
     <div class="post__top">
         <div class="post__top-left">
             <div class="post__top-left--avatar" style="background-image: url({{ post.user.profile.avatar.url }});">
             </div>
             <div class="post__top-left--right">
-                <a style="color: #fff;" href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{ post.user.lastname }} -
+                <a style="color: #fff;" href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{
+                    post.user.lastname }} -
                     <span>Follow</span>
                 </a>
                 <p>{{ post.created_at }} -
@@ -153,238 +162,243 @@ align-items: center;
     </div>
     <div class="post__content">
         <p>{{ post.content }}</p>
-        <div class="post__content-image" style="
-                        background-image: url({{ post.content_object.file.url }});
-                        height: 500px;
-                        ">
-        </div>
-        <div class="post__content-status">
-            <p id="liked_user">
-                {% if like_count > 2 %}and {{like_count}} others{% endif %}
-            </p>
-            <div id="comment_count_wrapper">
-                {% if comment_k %}
-                <p>{{ comment_count }}k comments</p>
-                {% else %}
-                {% if comment_m %}
-                <p>{{ comment_count }}M comments</p>
-                {% else %}
-                <p id="comment_count_wrapper-p">{{ comment_count }} comments</p>
-                {% endif %}
-                {% endif %}
-                <p>400 shares</p>
-            </div>
-        </div>
-        <div class="post__content-bottom">
-            <div class="post__content-bottom--box">
-                <button id="post_like_submit" data-post-id="{{ post.id }}">
-                    {% if is_like %}
-                    <i class="fa-solid fa-thumbs-up"></i>
-                    {% else %}
-                    <i class="fa-regular fa-thumbs-up"></i>
-                    {% endif %}
-                    <p>Like</p>
-                </button>
-            </div>
-            <div class="post__content-bottom--box" data-bs-toggle="modal" data-bs-target="#comment__post">
-                <i class="fa-regular fa-comment"></i>
-                <p>Comment</p>
-            </div>
-            <div class="post__content-bottom--box">
-                <i class="fa-solid fa-share-nodes"></i>
-                <p>Share</p>
-            </div>
-        </div>
-        <div class="post__comment-wrapper">
-            {% for comment, time, time_day in comments %}
-            <div class="post__comment">
-                <div class="post__top-left--avatar post__comment-img" style="background-image: url({{ comment.user.profile.avatar.url }});">
-                </div>
-                <div class="post__comment-text">
-                    <a href="#">
-                        {{ comment.user.firstname }}
-                        {{ comment.user.lastname}}
-                    </a>
-                    <p>{{ comment.text }}</p>
-                    <div>
-                        <!-- d,D,M,m,Y,F,l -->
-                        {% if time_day %}
-                        <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{ time }}d</span>
-                        {% else %}
-                        <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{ time }}h</span>
-                        {% endif %}
-                        <span>Like</span>
-                        <span>Reply</span>
-                    </div>
-                </div>
-                <i class="fa-solid fa-ellipsis"></i>
-            </div>
-            {% endfor %}
-        </div>
-        <form class="post__content-input" style="margin: 14px 0px;">
-            {% csrf_token %}
-            <span id="get_post_id_for_comment" style="display: none;" data-post-id="{{ post.id }}"></span>
-            <div class="post__content-input--avatar"
-                style="background-image: url({{ request.user.profile.avatar.url }});"></div>
-            <input type="text" id="comment_input_data" placeholder="Write a comment..." style="color: #fff; border: 1px solid #ccc;">
-            <i class="fa-solid fa-umbrella-beach"></i>
-            <i class="fa-solid fa-vector-square"></i>
-            <i class="fa-regular fa-face-smile"></i>
-            <i class="fa-solid fa-poop"></i>
-            <i class="fa-solid fa-paper-plane"></i>
-        </form>
+        <img src="{{ post.content_object.file.url }}" class="post__content-image" alt="">
     </div>
+    <div class="post__content-status">
+        <p id="liked_user">
+            {% if like_count > 2 %}and {{like_count}} others{% endif %}
+        </p>
+        <div id="comment_count_wrapper">
+            {% if comment_k %}
+            <p>{{ comment_count }}k comments</p>
+            {% else %}
+            {% if comment_m %}
+            <p>{{ comment_count }}M comments</p>
+            {% else %}
+            <p id="comment_count_wrapper-p">{{ comment_count }} comments</p>
+            {% endif %}
+            {% endif %}
+            <p>400 shares</p>
+        </div>
+    </div>
+    <div class="post__content-bottom" style="border: none; margin-bottom: 10px;">
+        <div class="post__content-bottom--box">
+            <button id="post_like_submit" data-post-id="{{ post.id }}">
+                {% if is_like %}
+                <i class="fa-solid fa-thumbs-up"></i>
+                {% else %}
+                <i class="fa-regular fa-thumbs-up"></i>
+                {% endif %}
+                <p>Like</p>
+            </button>
+        </div>
+        <div class="post__content-bottom--box" data-bs-toggle="modal" data-bs-target="#comment__post">
+            <i class="fa-regular fa-comment"></i>
+            <p>Comment</p>
+        </div>
+        <div class="post__content-bottom--box">
+            <i class="fa-solid fa-share-nodes"></i>
+            <p>Share</p>
+        </div>
+    </div>
+    <div class="post__comment-wrapper">
+        {% for comment, time, time_day in comments %}
+        <div class="post__comment">
+            <div class="post__top-left--avatar post__comment-img"
+                style="background-image: url({{ comment.user.profile.avatar.url }});">
+            </div>
+            <div class="post__comment-text">
+                <a href="#">
+                    {{ comment.user.firstname }}
+                    {{ comment.user.lastname}}
+                </a>
+                <p>{{ comment.text }}</p>
+                <div>
+                    <!-- d,D,M,m,Y,F,l -->
+                    {% if time_day %}
+                    <span data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{
+                        time }}d</span>
+                    {% else %}
+                    <span data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{
+                        time }}h</span>
+                    {% endif %}
+                    <span>Like</span>
+                    <span>Reply</span>
+                </div>
+            </div>
+            <i class="fa-solid fa-ellipsis"></i>
+        </div>
+        {% endfor %}
+    </div>
+    <form class="post__content-input" style="margin: 14px 0px;">
+        {% csrf_token %}
+        <span id="get_post_id_for_comment" style="display: none;" data-post-id="{{ post.id }}"></span>
+        <div class="post__content-input--avatar" style="background-image: url({{ request.user.profile.avatar.url }});">
+        </div>
+        <input type="text" id="comment_input_data" placeholder="Write a comment..."
+            style="color: #fff; border: 1px solid #ccc;">
+    </form>
+</div>
 </div>
 {% endif %}
 {% else %}
 <div class="post"
-    style="height: 750px; overflow-y: scroll; width: 650px; margin-left: auto; margin-right: auto; margin-top: 70px; position: absolute; top: 80px; left: 31%; z-index: 3; color: #fff; background-color: #000;">
-    <div class="post__top">
-        <div class="post__top-left">
-            <div class="post__top-left--avatar" style="background-image: url({{ post.user.profile.avatar.url }});">
-            </div>
-            <div class="post__top-left--right">
-                <a style="color: #fff;" href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }} {{post.user.lastname }} -
-                    <span>Follow</span>
-                </a>
-                <p>{{ post.created_at }} -
-                    <i class="fa-solid fa-globe"></i>
-                </p>
-            </div>
+    style="transform: scale(0.75); overflow-y: scroll; width: 600px; margin-left: auto; margin-right: auto; margin: 0; position:  absolute; top: 58px; left: 31%; z-index: 3; color: #fff; background-color: #000;"">
+    <div class=" post__top">
+    <div class="post__top-left">
+        <div class="post__top-left--avatar" style="background-image: url({{ post.user.profile.avatar.url }});">
         </div>
-        <div class="post__top-right">
-            <i class="fa-solid fa-ellipsis"></i>
-            <i class="fa-solid fa-xmark"></i>
-        </div>
-    </div>
-    <div class="post__content">
-        <p>{{ post.content }}</p>
-        <video loop autoplay style="object-fit: cover; width: 100%; height: 500px;">
-            <source src="{{ post.content_object.file.url }}" type="video/mp4">
-        </video>
-        <div class="post__content-status">
-            <p id="liked_user">
-                {% if like_count > 2 %}and {{like_count}} others{% endif %}
+        <div class="post__top-left--right">
+            <a style="color: #fff;" href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }}
+                {{post.user.lastname }} -
+                <span>Follow</span>
+            </a>
+            <p>{{ post.created_at }} -
+                <i class="fa-solid fa-globe"></i>
             </p>
-            <div id="comment_count_wrapper">
-                {% if comment_k %}
-                <p>{{ comment_count }}k comments</p>
-                {% else %}
-                {% if comment_m %}
-                <p>{{ comment_count }}M comments</p>
-                {% else %}
-                <p id="comment_count_wrapper-p">{{ comment_count }} comments</p>
-                {% endif %}
-                {% endif %}
-                <p>400 shares</p>
-            </div>
         </div>
-        <div class="post__content-bottom">
-            <div class="post__content-bottom--box">
-                <button id="post_like_submit" data-post-id="{{ post.id }}">
-                    {% if is_like %}
-                    <i class="fa-solid fa-thumbs-up"></i>
-                    {% else %}
-                    <i class="fa-regular fa-thumbs-up"></i>
-                    {% endif %}
-                    <p>Like</p>
-                </button>
-            </div>
-            <div class="post__content-bottom--box" data-bs-toggle="modal" data-bs-target="#comment__post">
-                <i class="fa-regular fa-comment"></i>
-                <p>Comment</p>
-            </div>
-            <div class="post__content-bottom--box">
-                <i class="fa-solid fa-share-nodes"></i>
-                <p>Share</p>
-            </div>
-        </div>
-        <div class="post__comment-wrapper">
-            {% for comment, time, time_day in comments %}
-            <div class="post__comment">
-                <div class="post__top-left--avatar post__comment-img" style="background-image: url({{ comment.user.profile.avatar.url }});">
-                </div>
-                <div class="post__comment-text">
-                    <a href="#">
-                        {{ comment.user.firstname }}
-                        {{ comment.user.lastname}}
-                    </a>
-                    <p>{{ comment.text }}</p>
-                    <div>
-                        <!-- d,D,M,m,Y,F,l -->
-                        {% if time_day %}
-                        <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{ time }}d</span>
-                        {% else %}
-                        <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{ time }}h</span>
-                        {% endif %}
-                        <span>Like</span>
-                        <span>Reply</span>
-                    </div>
-                </div>
-                <i class="fa-solid fa-ellipsis"></i>
-            </div>
-            {% endfor %}
-        </div>
-        <form class="post__content-input" style="margin: 14px 0px;">
-            {% csrf_token %}
-            <span id="get_post_id_for_comment" style="display: none;" data-post-id="{{ post.id }}"></span>
-            <div class="post__content-input--avatar"
-                style="background-image: url({{ request.user.profile.avatar.url }});"></div>
-            <input type="text" id="comment_input_data" placeholder="Write a comment..." style="color: #fff; border: 1px solid #ccc;">
-            <i class="fa-solid fa-umbrella-beach"></i>
-            <i class="fa-solid fa-vector-square"></i>
-            <i class="fa-regular fa-face-smile"></i>
-            <i class="fa-solid fa-poop"></i>
-            <i class="fa-solid fa-paper-plane"></i>
-        </form>
     </div>
+    <div class="post__top-right">
+        <i class="fa-solid fa-ellipsis"></i>
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+</div>
+<div class="post__content">
+    <p>{{ post.content }}</p>
+    <video loop autoplay style="object-fit: cover; width: 100%; height: 500px;">
+        <source src="{{ post.content_object.file.url }}" type="video/mp4">
+    </video>
+    <div class="post__content-status">
+        <p id="liked_user">
+            {% if like_count > 2 %}and {{like_count}} others{% endif %}
+        </p>
+        <div id="comment_count_wrapper">
+            {% if comment_k %}
+            <p>{{ comment_count }}k comments</p>
+            {% else %}
+            {% if comment_m %}
+            <p>{{ comment_count }}M comments</p>
+            {% else %}
+            <p id="comment_count_wrapper-p">{{ comment_count }} comments</p>
+            {% endif %}
+            {% endif %}
+            <p>400 shares</p>
+        </div>
+    </div>
+    <div class="post__content-bottom">
+        <div class="post__content-bottom--box">
+            <button id="post_like_submit" data-post-id="{{ post.id }}">
+                {% if is_like %}
+                <i class="fa-solid fa-thumbs-up"></i>
+                {% else %}
+                <i class="fa-regular fa-thumbs-up"></i>
+                {% endif %}
+                <p>Like</p>
+            </button>
+        </div>
+        <div class="post__content-bottom--box" data-bs-toggle="modal" data-bs-target="#comment__post">
+            <i class="fa-regular fa-comment"></i>
+            <p>Comment</p>
+        </div>
+        <div class="post__content-bottom--box">
+            <i class="fa-solid fa-share-nodes"></i>
+            <p>Share</p>
+        </div>
+    </div>
+    <div class="post__comment-wrapper">
+        {% for comment, time, time_day in comments %}
+        <div class="post__comment">
+            <div class="post__top-left--avatar post__comment-img"
+                style="background-image: url({{ comment.user.profile.avatar.url }});">
+            </div>
+            <div class="post__comment-text">
+                <a href="#">
+                    {{ comment.user.firstname }}
+                    {{ comment.user.lastname}}
+                </a>
+                <p>{{ comment.text }}</p>
+                <div>
+                    <!-- d,D,M,m,Y,F,l -->
+                    {% if time_day %}
+                    <span data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{
+                        time }}d</span>
+                    {% else %}
+                    <span data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="{{ comment.date_commented|date:'l, m F Y' }} at {{ comment.date_commented|date:'h:t' }}">{{
+                        time }}h</span>
+                    {% endif %}
+                    <span>Like</span>
+                    <span>Reply</span>
+                </div>
+            </div>
+            <i class="fa-solid fa-ellipsis"></i>
+        </div>
+        {% endfor %}
+    </div>
+    <form class="post__content-input" style="margin: 14px 0px;">
+        {% csrf_token %}
+        <span id="get_post_id_for_comment" style="display: none;" data-post-id="{{ post.id }}"></span>
+        <div class="post__content-input--avatar" style="background-image: url({{ request.user.profile.avatar.url }});">
+        </div>
+        <input type="text" id="comment_input_data" placeholder="Write a comment..."
+            style="color: #fff; border: 1px solid #ccc;">
+        <i class="fa-solid fa-umbrella-beach"></i>
+        <i class="fa-solid fa-vector-square"></i>
+        <i class="fa-regular fa-face-smile"></i>
+        <i class="fa-solid fa-poop"></i>
+        <i class="fa-solid fa-paper-plane"></i>
+    </form>
+</div>
 </div>
 <!-- <div style="width: 100%; height: 7vh; background-color: rgba(12, 12, 12, 0.8); position: absolute; bottom: -7vh;"></div> -->
 {% endif %}
 <script>
-        // Function to get CSRF token from cookies
-        function getCookie(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = cookies[i].trim();
-                    // Does this cookie string begin with the name we want?
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
+    // Function to get CSRF token from cookies
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
                 }
             }
-            return cookieValue;
         }
+        return cookieValue;
+    }
 
-        $(document).ready(function(){
-            $(".post__content-input").submit((e) => {
-                e.preventDefault()
-                let inputValue = $(e.target).find('#comment_input_data').val()
-                let postID = $(e.target).find('#get_post_id_for_comment').data('post-id')
-                let csrftoken = getCookie('csrftoken')
-                $.ajax({
-                    url: `/home/post/${postID}/`,
-                    type: 'POST',
-                    data: {
-                        csrfmiddlewaretoken: csrftoken,
-                        comment__post: inputValue
-                    },
-                    headers: {
-                        "X-CSRFToken": csrftoken
-                    },
-                    success: (data) => {
-                        $(e.target).find('#comment_input_data').val("");
-                        $(".post__comment-wrapper").empty();
-                        let commentCountText = `${data.comment_count} comments`
-                        $("#comment_count_wrapper-p").text(commentCountText)
-                        data.comments.forEach((comment) => {
-                            let profileImageUrl = comment['comment_avatar'];
-                            profileImageUrl = `/media/${profileImageUrl}`;
-                            console.log(profileImageUrl)
-                            let commentElement = comment['time_day'] ?
+    $(document).ready(function () {
+        $(".post__content-input").submit((e) => {
+            e.preventDefault()
+            let inputValue = $(e.target).find('#comment_input_data').val()
+            let postID = $(e.target).find('#get_post_id_for_comment').data('post-id')
+            let csrftoken = getCookie('csrftoken')
+            $.ajax({
+                url: `/home/post/${postID}/`,
+                type: 'POST',
+                data: {
+                    csrfmiddlewaretoken: csrftoken,
+                    comment__post: inputValue
+                },
+                headers: {
+                    "X-CSRFToken": csrftoken
+                },
+                success: (data) => {
+                    $(e.target).find('#comment_input_data').val("");
+                    $(".post__comment-wrapper").empty();
+                    let commentCountText = `${data.comment_count} comments`
+                    $("#comment_count_wrapper-p").text(commentCountText)
+                    data.comments.forEach((comment) => {
+                        let profileImageUrl = comment['comment_avatar'];
+                        profileImageUrl = `/media/${profileImageUrl}`;
+                        console.log(profileImageUrl)
+                        let commentElement = comment['time_day'] ?
                             `<div class="post__comment">
                             <div class="post__top-left--avatar post__comment-img" style="background-image: url(${profileImageUrl});"></div>
                                                   <div class="post__comment-text">
@@ -403,7 +417,7 @@ align-items: center;
                                                   </div>
                                                   <i class="fa-solid fa-ellipsis"></i>
                                                   `
-                                                  :
+                            :
                             `<div class="post__comment">
                             <div class="post__top-left--avatar post__comment-img" style="background-image: url(${profileImageUrl});"></div>
                                                   <div class="post__comment-text">
@@ -423,80 +437,79 @@ align-items: center;
                                                         <i class="fa-solid fa-ellipsis"></i>
                                                   `
                         $(".post__comment-wrapper").append(commentElement)
-                        })
-                    }
-                })
+                    })
+                }
             })
-            $('#post_like_submit').click(function(){
-                var postId = $(this).data('post-id'); // Get post ID from data attribute
-                // var likeCount = $(this).siblings('.like-count'); // Get like count element
-                var csrftoken = getCookie('csrftoken'); // Get CSRF token
-                $.ajax({
-                    url: `/home/post/${postId}/`,  // URL to your Django view handling the like
-                    type: 'POST',
-                    data: { 
-                        csrfmiddlewaretoken: csrftoken, // Include CSRF token in data
-                        post_id: postId 
-                    },
-                    headers: {
-                        "X-CSRFToken": csrftoken // Include CSRF token in headers
-                    },
-                    success: function(data){
-                        $("#liked_user").empty()
-                        data.likes_person_two.forEach(person => {
-                            let fullName = `${person.firstname} ${person.lastname}`
-                            $("#liked_user").append(`<span>${fullName}</span>`)
-                        });
-                        if (data.like_count > 2)
-                            $('#liked_user').append(`<span style="margin-left: 5px;"> and ${data.like_count} others</span>`)
-                        else 
-                            $('#liked_user').append(`<span></span>`)
+        })
+        $('#post_like_submit').click(function () {
+            var postId = $(this).data('post-id'); // Get post ID from data attribute
+            // var likeCount = $(this).siblings('.like-count'); // Get like count element
+            var csrftoken = getCookie('csrftoken'); // Get CSRF token
+            $.ajax({
+                url: `/home/post/${postId}/`,  // URL to your Django view handling the like
+                type: 'POST',
+                data: {
+                    csrfmiddlewaretoken: csrftoken, // Include CSRF token in data
+                    post_id: postId
+                },
+                headers: {
+                    "X-CSRFToken": csrftoken // Include CSRF token in headers
+                },
+                success: function (data) {
+                    $("#liked_user").empty()
+                    data.likes_person_two.forEach(person => {
+                        let fullName = `${person.firstname} ${person.lastname}`
+                        $("#liked_user").append(`<span>${fullName}</span>`)
+                    });
+                    if (data.like_count > 2)
+                        $('#liked_user').append(`<span style="margin-left: 5px;"> and ${data.like_count} others</span>`)
+                    else
+                        $('#liked_user').append(`<span></span>`)
 
-                        if(data.is_like){
-                            $('.fa-thumbs-up').removeClass("fa-regular")
-                            $('.fa-thumbs-up').addClass("fa-solid")
-                        }
-                        else {
-                            $('.fa-thumbs-up').removeClass("fa-solid")
-                            $('.fa-thumbs-up').addClass("fa-regular")
-                        }
+                    if (data.is_like) {
+                        $('.fa-thumbs-up').removeClass("fa-regular")
+                        $('.fa-thumbs-up').addClass("fa-solid")
                     }
-                });
+                    else {
+                        $('.fa-thumbs-up').removeClass("fa-solid")
+                        $('.fa-thumbs-up').addClass("fa-regular")
+                    }
+                }
             });
-
-            function updateLikedUsers(postId) {
-                var csrftoken = getCookie('csrftoken'); // Get CSRF token
-                $.ajax({
-                    url: `/home/post/${postId}/`, 
-                    type: 'GET',
-                    headers: {
-                        "X-CSRFToken": csrftoken
-                    },
-                    success: function(data){
-                        $("#liked_user").empty();
-                        data.likes_person_two.forEach(person => {
-                            let fullName = `${person.firstname} ${person.lastname}`;
-                            $("#liked_user").append('<span>' + fullName + '</span>');
-                        });
-                        if (data.like_count >= 1)
-                            $('#liked_user').append(`<span style="margin-left: 0px;">and ${data.like_count} others</span>`)
-                        else 
-                            $('#liked_user').append(`<span></span>`)
-                    }
-                });
-            }
-
-            // Retrieve the postId when the document is ready
-            var postId = $('#post_like_submit').data('post-id');
-
-            // Call the function to update liked users' data immediately
-            updateLikedUsers(postId);
-
-            // Periodically update liked users' data every 2 seconds
-            setInterval(function() {
-                updateLikedUsers(postId);
-            }, 8000);
-
         });
-</script>
 
+        function updateLikedUsers(postId) {
+            var csrftoken = getCookie('csrftoken'); // Get CSRF token
+            $.ajax({
+                url: `/home/post/${postId}/`,
+                type: 'GET',
+                headers: {
+                    "X-CSRFToken": csrftoken
+                },
+                success: function (data) {
+                    $("#liked_user").empty();
+                    data.likes_person_two.forEach(person => {
+                        let fullName = `${person.firstname} ${person.lastname}`;
+                        $("#liked_user").append('<span>' + fullName + '</span>');
+                    });
+                    if (data.like_count >= 1)
+                        $('#liked_user').append(`<span style="margin-left: 0px;">and ${data.like_count} others</span>`)
+                    else
+                        $('#liked_user').append(`<span></span>`)
+                }
+            });
+        }
+
+        // Retrieve the postId when the document is ready
+        var postId = $('#post_like_submit').data('post-id');
+
+        // Call the function to update liked users' data immediately
+        updateLikedUsers(postId);
+
+        // Periodically update liked users' data every 2 seconds
+        setInterval(function () {
+            updateLikedUsers(postId);
+        }, 8000);
+
+    });
+</script>
