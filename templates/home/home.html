@@ -12,6 +12,36 @@
                     <i class="fa-solid fa-bars"></i>
                 </div>
             </div>
+            <div class="home__phone-navigation-list">
+                <a href="#">
+                    <img src="{% static 'img/phone/home.svg' %}" alt="">
+                </a>
+                <a href="#">
+                    <img src="{% static 'img/phone/users.svg' %}" alt="">
+                </a>
+                <a href="#">
+                    <img src="{% static 'img/phone/message.svg' %}" alt="">
+                </a>
+                <a href="#">
+                    <img src="{% static 'img/phone/video.svg' %}" alt="">
+                </a>
+                <a href="#">
+                    <img src="{% static 'img/phone/bell.svg' %}" alt="">
+                </a>
+                <a href="#">
+                    <img src="{% static 'img/phone/market.svg' %}" alt="">
+                </a>
+            </div>
+            <form class="home__phone-post-top">
+                {% csrf_token %}
+                <img src="{{ request.user.profile.avatar.url }}" alt="no image" class="phone_home-avatar">
+                <input type="text" placeholder="What's on your mind?">
+                <label for="file_choose">
+                    <img src="{% static 'img/phone/gallery.svg' %}" alt="">
+                    Photo
+                </label>
+            </form>
+
         </div>
         <!-- media telefon uchun -->
         <div class="person">
@@ -145,7 +175,7 @@
         {% else %}
         <div style="position: relative; top: 80px; width: 680px;" class="middle">
             {% if check_stories %}
-            <div class="personalaty">
+            <div class="personalaty phone_media">
                 <i class="fa-solid fa-chevron-left"></i>
                 <div class="create">
                     <a href="{% url 'create_story' %}">
@@ -160,7 +190,7 @@
                     {% for story, is_our_story in stories %}
                     <a href="{% url 'story_detail' story.id %}">
                         <div class="create-info friend_stories">
-                            <div style="background-image: url({{ story.image.url }});" class="shaxsiy_1">
+                            <div style="background-image: url({{ story.image.url }});" class="shaxsiy_1 shaxsiy_2">
 
                                 <span class="brand"
                                     style="background-image: url({{ story.user.profile.avatar.url }});"></span>
