@@ -1,7 +1,7 @@
 {% extends 'story/story_detail.html' %}
 
 {% block story %}
-<div class="story_post">
+<div class="story_post" data-story-id='{{ story.id }}'>
     <div id="progress-bar">
         <div id="progress"></div>
     </div>
@@ -26,7 +26,7 @@
     <img src="{{ story.image.url }}" alt="" id="story_image">
 
 </div>
-<a>
+<a href="#">
     <i class="fa-solid fa-chevron-right" id="nextStory"></i>
 </a>
 
@@ -77,36 +77,44 @@
         playButton.style.display = 'none'
     });
 
+    $(document).ready(() => {
+        $('#nextStory').click((e) => {
+            e.preventDefault()
 
-
-    $(document).ready(function () {
-        const nextStoryButton = $('#nextStory');
-
-        // Event listener for clicking the next story button
-        nextStoryButton.on('click', function () {
-            // Make AJAX request to fetch the next story's ID
             $.ajax({
-                url: '{% url "story_detail" story.id %}',
-                method: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    const nextStoryId = data.next_story_id;
-                    if (nextStoryId) {
-                        // Use AJAX to fetch the content of the next story
-                        // and update the DOM with the new content
-                        // You can implement this part as needed based on your application's structure
-                        console.log("Next story ID:", nextStoryId);
+                type: 'GET',
+                url: "{% url 'next_story' %}",
+                success: (data) => {
+                    let currentStory = $(".story_post").data("story-id")
+                    let index = data.indexOf(currentStory)
+                    if (data.length == 1) {
+                        window.location.href = '/'
+                        console.log('salom');
                     } else {
-                        // Redirect to the homepage if there's no next story
-                        window.location.href = '/';
+                        if (index !== -1) {
+                            currentStoryChanged = $(".story_post").attr("data-story-id", data[0])
+                            currentStory = currentStoryChanged.data.length
+                            let index = data.indexOf(currentStory)
+                            data.splice(0, index + 1);
+                            console.log(currentStory);
+                        }
+                        let storyUrl = `/story/detail/${data[0]}/`
+                        history.pushState(null, null, storyUrl)
+                        var parts = window.location.href
+                        console.log(parts);
+                        $.ajax({
+                            type: "GET",
+                            url: storyUrl,
+                            success: () => {
+                                console.log(`/story/detail/${data[0]}`);
+                            }
+                        })
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', error);
                 }
-            });
-        });
-    });
+            })
+
+        })
+    })
 
 </script>
 

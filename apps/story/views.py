@@ -34,3 +34,27 @@ def story_detail(request, storyID):
         "story": story
     }
     return render(request, 'includes/story_content.html', context)
+
+
+def next_story(request):
+    story_ids = []
+    try:
+        if Friendship.objects.filter(Q(user1=request.user) | Q(user2=request.user)):
+            for user in Friendship.objects.filter(Q(user1=request.user) | Q(user2=request.user)):
+                m_stories = Story.objects.filter(
+                    user=request.user)  # mening storyim
+                o_stories = Story.objects.exclude(id__in=m_stories.values_list("id", flat=True)).filter(
+                    Q(user=user.user1) |
+                    Q(user=user.user2)
+                ).order_by("created_at")
+
+                stories = list(m_stories) + list(o_stories)
+                for x in stories:
+                    story_ids.append(x.id)
+        else:
+            story = Story.objects.get(user=request.user)
+            story_ids.append(story.id)
+    except Story.DoesNotExist:
+        pass
+
+    return JsonResponse(story_ids, safe=False)

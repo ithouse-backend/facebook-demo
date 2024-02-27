@@ -302,92 +302,6 @@
             </div>
             {% else %}
             {% if post.content_object %}
-            {% if post.content_object.height > 2000 %}
-            <div class="post" style="height: auto; padding-bottom: 15px;">
-                <div class="post__top">
-                    <div class="post__top-left">
-                        <div class="post__top-left--avatar"
-                            style="background-image: url({{ post.user.profile.avatar.url }});"></div>
-                        <div class="post__top-left--right">
-                            <a href="{% url 'profile' post.user.unique_id %}">{{ post.user.firstname }}
-                                {{post.user.lastname }} -
-                                <span>Follow</span>
-                            </a>
-                            <p>{{ post.created_at }} -
-                                <i class="fa-solid fa-globe"></i>
-                            </p>
-                        </div>
-                    </div>
-                    <form class="post__top-right" method="POST">
-                        {% csrf_token %}
-                        <i class="fa-solid fa-ellipsis"></i>
-                        <button type="submit" style="border: none; background-color: transparent;">
-                            <i class="fa-solid fa-xmark" data-post-id="{{ post.id }}"></i>
-                        </button>
-                        <input type="hidden" name="data-post-id" value="{{ post.id }}">
-                    </form>
-                </div>
-                <div class="post__content">
-                    <p>{{ post.content }}</p>
-                    <div class="post__content-image" style="
-                            background-image: url({{ post.content_object.file.url }});
-                            height: 700px;
-                            ">
-                    </div>
-                    <div class="post__content-status">
-                        <p style="color: #000;">
-                            {% for liked_two in likes_person_two %}
-                            {{ liked_two.user.firstname }} {{liked_two.user.lastname}}
-                            {% endfor %}
-                            and {{like_count_list}} others</p>
-                        <div style="color: #000 !important;">
-                            {% if comment_k %}
-                            <p style="color: #000;">{{ comment_count }}k comments</p>
-                            {% else %}
-                            {% if comment_m %}
-                            <p style="color: #000;">{{ comment_count }}M comments</p>
-                            {% else %}
-                            <p style="color: #000;">{{ comment_count }} comments</p>
-                            {% endif %}
-                            {% endif %}
-                            <p style="color: #000;">400 shares</p>
-                        </div>
-                    </div>
-                    <div class="post__content-bottom">
-                        <form class="post__content-bottom--box" method="post">
-                            {% csrf_token %}
-                            <button type="submit" style="color: #000;">
-                                {% if is_like %}
-                                <i class="fa-solid fa-thumbs-up"></i>
-                                {% else %}
-                                <i class="fa-regular fa-thumbs-up"></i>
-                                {% endif %}
-                                <p>Like</p>
-                                <input type="hidden" value="true" name="post__like">
-                                <input type="hidden" value="{{ post.id }}" name="post__like-postID">
-                            </button>
-                        </form>
-                        <div class="post__content-bottom--box" data-bs-toggle="modal" data-bs-target="#comment__post">
-                            <i class="fa-regular fa-comment"></i>
-                            <p>
-                                <a href="/home/post/{{post.id}}">
-                                    Comment
-                                </a>
-                            </p>
-                        </div>
-                        <div class="post__content-bottom--box">
-                            <i class="fa-solid fa-share-nodes"></i>
-                            <p>Share</p>
-                        </div>
-                    </div>
-                    <form class="post__content-input">
-                        <div class="post__content-input--avatar"
-                            style="background-image: url({{ request.user.profile.avatar.url }});"></div>
-                        <input type="text" placeholder="Write a comment...">
-                    </form>
-                </div>
-            </div>
-            {% else %}
             <div class="post" style="height: auto; padding-bottom: 10px;">
                 <div class="post__top">
                     <div class="post__top-left">
@@ -414,65 +328,60 @@
                 </div>
                 <div class="post__content">
                     <p>{{ post.content }}</p>
-                    <div class="post__content-image" style="
-                            background-image: url({{ post.content_object.file.url }});
-                            height: 700px;
-                            ">
-                    </div>
-                    <div class="post__content-status">
-                        <p style="color: #000;">
-                            {% for liked_two in likes_person_two %}
-                            {{ liked_two.user.firstname }} {{liked_two.user.lastname}}
-                            {% endfor %}
-                            and {{like_count_list}} others</p>
-                        <div style="color: #000 !important;">
-                            {% if comment_k %}
-                            <p style="color: #000;">{{ comment_count }}k comments</p>
-                            {% else %}
-                            {% if comment_m %}
-                            <p style="color: #000;">{{ comment_count }}M comments</p>
-                            {% else %}
-                            <p style="color: #000;">{{ comment_count }} comments</p>
-                            {% endif %}
-                            {% endif %}
-                            <p style="color: #000;">400 shares</p>
-                        </div>
-                    </div>
-                    <div class="post__content-bottom">
-                        <form class="post__content-bottom--box" method="post">
-                            {% csrf_token %}
-                            <button type="submit" style="color: #000;">
-                                {% if is_like %}
-                                <i class="fa-solid fa-thumbs-up"></i>
-                                {% else %}
-                                <i class="fa-regular fa-thumbs-up"></i>
-                                {% endif %}
-                                <p>Like</p>
-                                <input type="hidden" value="true" name="post__like">
-                                <input type="hidden" value="{{ post.id }}" name="post__like-postID">
-                            </button>
-                        </form>
-                        <div class="post__content-bottom--box" data-bs-toggle="modal" data-bs-target="#comment__post">
-                            <i class="fa-regular fa-comment"></i>
-                            <p>
-                                <a href="/home/post/{{post.id}}">
-                                    Comment
-                                </a>
-                            </p>
-                        </div>
-                        <div class="post__content-bottom--box">
-                            <i class="fa-solid fa-share-nodes"></i>
-                            <p>Share</p>
-                        </div>
-                    </div>
-                    <form class="post__content-input">
-                        <div class="post__content-input--avatar"
-                            style="background-image: url({{ request.user.profile.avatar.url }});"></div>
-                        <input type="text" placeholder="Write a comment...">
-                    </form>
+                    <img src="{{ post.content_object.file.url }}" class="post__content-image" alt="">
                 </div>
+                <div class="post__content-status">
+                    <p style="color: #000;">
+                        {% for liked_two in likes_person_two %}
+                        {{ liked_two.user.firstname }} {{liked_two.user.lastname}}
+                        {% endfor %}
+                        and {{like_count_list}} others</p>
+                    <div style="color: #000 !important;">
+                        {% if comment_k %}
+                        <p style="color: #000;">{{ comment_count }}k comments</p>
+                        {% else %}
+                        {% if comment_m %}
+                        <p style="color: #000;">{{ comment_count }}M comments</p>
+                        {% else %}
+                        <p style="color: #000;">{{ comment_count }} comments</p>
+                        {% endif %}
+                        {% endif %}
+                        <p style="color: #000;">400 shares</p>
+                    </div>
+                </div>
+                <div class="post__content-bottom">
+                    <form class="post__content-bottom--box" method="post">
+                        {% csrf_token %}
+                        <button type="submit" style="color: #000;">
+                            {% if is_like %}
+                            <i class="fa-solid fa-thumbs-up"></i>
+                            {% else %}
+                            <i class="fa-regular fa-thumbs-up"></i>
+                            {% endif %}
+                            <p>Like</p>
+                            <input type="hidden" value="true" name="post__like">
+                            <input type="hidden" value="{{ post.id }}" name="post__like-postID">
+                        </button>
+                    </form>
+                    <div class="post__content-bottom--box" data-bs-toggle="modal" data-bs-target="#comment__post">
+                        <i class="fa-regular fa-comment"></i>
+                        <p>
+                            <a href="/home/post/{{post.id}}">
+                                Comment
+                            </a>
+                        </p>
+                    </div>
+                    <div class="post__content-bottom--box">
+                        <i class="fa-solid fa-share-nodes"></i>
+                        <p>Share</p>
+                    </div>
+                </div>
+                <form class="post__content-input">
+                    <div class="post__content-input--avatar"
+                        style="background-image: url({{ request.user.profile.avatar.url }});"></div>
+                    <input type="text" placeholder="Write a comment...">
+                </form>
             </div>
-            {% endif %}
             {% else %}
             <div class="post" style="height: auto; padding-bottom: 10px;">
                 <div class="post__top">
@@ -558,16 +467,17 @@
             {% endif %}
             {% endfor %}
         </div>
-        {% endif %}
+    </div>
+    {% endif %}
 
-        <div class="gurux">
-            <p class="suhbat">GURUH SUHBATLARI</p>
-            <div class="gurux_bir">
-                <i class="fa-solid fa-plus"></i>
-                <a class="newy" href="#">Yangi gurux yaratish</a>
-            </div>
+    <div class="gurux">
+        <p class="suhbat">GURUH SUHBATLARI</p>
+        <div class="gurux_bir">
+            <i class="fa-solid fa-plus"></i>
+            <a class="newy" href="#">Yangi gurux yaratish</a>
         </div>
     </div>
+</div>
 </div>
 {% include 'includes/post-create.html' %}
 {% endblock %}
