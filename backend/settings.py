@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "apps.authentication.apps.AuthenticationConfig",
     "apps.story.apps.StoryConfig",
     "apps.base.apps.BaseConfig",
+    "apps.chat.apps.ChatConfig",
     "widget_tweaks",
     "django.contrib.humanize",
     "rest_framework"

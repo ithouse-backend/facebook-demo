@@ -6,4 +6,5 @@ muhit
 env
 .env
 db.sqlite3
-media/
+media/profile
+media/story
