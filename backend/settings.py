@@ -32,7 +32,8 @@ INSTALLED_APPS = [
     "apps.chat.apps.ChatConfig",
     "widget_tweaks",
     "django.contrib.humanize",
-    "rest_framework"
+    "rest_framework",
+    "django_user_agents",
 ]
 
 MIDDLEWARE = [
@@ -43,6 +44,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = "backend.urls"
@@ -112,6 +114,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+
+# for user agents cache
+USER_AGENTS_CACHE = None
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]

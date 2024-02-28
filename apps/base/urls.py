@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from apps.authentication.views import user_profile
+from apps.notfound import notFound404
 
 urlpatterns = [
     path("", views.HomePage.as_view(), name="home"),
@@ -16,5 +17,11 @@ urlpatterns = [
     path("remove/friend/<int:receiver_id>/",
          views.RemoveFriendRequestView.as_view(), name='friend_delete'),
     path("post/<int:postID>/", views.post_detail, name='post_detail'),
+    path("404/", notFound404, name="404_notfound"),
+    
+    
+    # phone
+    path('p/post/', views.mobile_post, name='mobile_post')
+    
 ]
 # monkeytype.com

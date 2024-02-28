@@ -547,3 +547,12 @@ def post_detail(request, postID):
             "comment_m": comment_m
         }
         return render(request, "home/comment.html", context)
+
+from django_user_agents.utils import get_user_agent
+
+def mobile_post(request):
+    user_agent = get_user_agent(request)
+    if user_agent.is_mobile or user_agent.is_tablet:
+        return render(request, 'phone/post.html')
+    else:
+        return redirect('404_notfound')
