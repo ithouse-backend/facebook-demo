@@ -9,4 +9,5 @@ urlpatterns = [
     path("", include("apps.authentication.urls")),
     path("home/", include("apps.base.urls")),
     path("story/", include("apps.story.urls")),
+    path("chat/", include("apps.chat.urls"))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

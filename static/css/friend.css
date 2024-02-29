@@ -9,6 +9,7 @@
   background-color: #fff;
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1), 3px 0 6px rgba(0, 0, 0, 0.1);
   padding: 10px;
+  transform: translateY(56px);
 }
 .friends__left-sidebar--top {
   display: flex;
@@ -111,7 +112,7 @@
 }
 .friends__recieve {
   width: 100px;
-  padding: 20px 30px;
+  padding: 90px 30px;
 }
 .friends__recieve h3 {
   font-weight: 700;

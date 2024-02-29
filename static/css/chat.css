@@ -1,0 +1,13 @@
+.chat {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+.chat_sidebar {
+    width: 24%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.1);
+    position: absolute;
+    left: 0;
+    top: 56px;
+}

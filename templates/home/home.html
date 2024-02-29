@@ -41,7 +41,19 @@
                     Photo
                 </label>
             </form>
-
+            {% if not check_stories %}
+            <div class="create phone_media">
+                <a href="{% url 'create_story' %}">
+                    <div class="create-info">
+                        <img class="shaxsiy_1" src="{{ request.user.profile.avatar.url }}" alt="person">
+                        <div class="hikoya_1">
+                            <i class="fa-solid fa-plus"></i>
+                            <a href="{% url 'create_story' %}">Create Story</a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endif %}
         </div>
         <!-- media telefon uchun -->
         <div class="person">
