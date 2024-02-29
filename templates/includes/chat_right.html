@@ -1,0 +1,24 @@
+{% load static %}
+<div class="chat_right">
+    <div class="chat_right-top">
+        <img src="{{ request.user.profile.avatar.url }}" alt="No image">
+        <h2>
+            {{ request.user.firstname }}
+            {{ request.user.lastname }}
+        </h2>
+        <div>
+            <span>
+                <img src="{% static 'img/user2.svg' %}" alt="">
+                Profile
+            </span>
+            <span>
+                <img src="{% static 'img/phone/bell.svg' %}" alt="">
+                Mute
+            </span>
+            <span>
+                <img src="{% static 'img/search.svg' %}" alt="">
+                Search
+            </span>
+        </div>
+    </div>
+</div>

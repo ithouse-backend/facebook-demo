@@ -1,4 +1,19 @@
 {% extends 'chat/base_chat.html' %}
-
+{% load static %}
 {% block chat %}
+<div class="chat_center-top">
+    <div>
+        <img src="{{ request.user.profile.avatar.url }}" alt="">
+        <h2>
+            {{ request.user.firstname }}
+            {{ request.user.lastname }}
+        </h2>
+    </div>
+    <div>
+        <img src="{% static 'img/phone.svg' %}" alt="No image">
+        <img src="{% static 'img/video.svg' %}" alt="No image">
+        <img src="{% static 'img/info.svg' %}" alt="No image">
+    </div>
+</div>
+{% include 'includes/chat_right.html' %}
 {% endblock %}
