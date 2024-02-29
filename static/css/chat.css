@@ -1,13 +1,101 @@
 .chat {
-    position: relative;
-    width: 100%;
-    height: 100vh;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #fff;
+}
+.chat a {
+    text-decoration: none;
+    color: #333;
+}
+.chat a:hover {
+    color: #333;
 }
 .chat_sidebar {
-    width: 24%;
-    height: 100vh;
-    background-color: rgba(0,0,0,0.1);
-    position: absolute;
-    left: 0;
-    top: 56px;
+  width: 19%;
+  height: 100vh;
+  background-color: transparent;
+  position: absolute;
+  left: 0;
+  padding-top: 51px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+.chat_sidebar-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+  margin: 20px 0px;
+}
+.chat_sidebar-top span img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
+  background-color: rgba(0, 0, 0, 0.07);
+  padding: 6px;
+  cursor: pointer;
+}
+.chat_sidebar-top span {
+  display: flex;
+}
+.chat_sidebar-top h1 {
+  font-size: 22px;
+  font-weight: bold;
+}
+.chat_sidebar-top-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0px 10px;
+}
+.chat_sidebar-top-input i {
+  position: absolute;
+  left: 19px;
+  color: #666;
+}
+.chat_sidebar-top-input input {
+  width: 100%;
+  border-radius: 30px;
+  outline: none;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 6px 0px 6px 29px;
+  font-size: 14px;
+}
+.chat_sidebar-users {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 0px 10px;
+}
+.chat_sidebar-users div img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+.chat_sidebar-users div p {
+  font-weight: 600;
+  margin: 0;
+  font-size: 13px;
+}
+.chat_sidebar-users div {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  transition: 0.3s all ease;
+}
+.chat_sidebar-users div:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    cursor: pointer;
 }

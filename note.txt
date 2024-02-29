@@ -37,4 +37,4 @@ button class="hide-post-btn" data-post-id="{{ post.id }}">Hide</button>
 </script>
 
 
-Home pageda comment va like muammosini togirlash
+Home pageda comment va like muammosini togirlash -- solved✅

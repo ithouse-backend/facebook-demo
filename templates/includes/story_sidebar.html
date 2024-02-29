@@ -3,14 +3,14 @@
         <a href="/" class="fa-solid fa-xmark"></a>
         <a href="/" class="fa-brands fa-facebook"></a>
     </div>
-    <div class="story_sidebar-top-second">
-        <div>
-            <h2>Your story</h2>
-            <i class="fa-solid fa-gear"></i>
+        <div class="story_sidebar-top-second">
+            <div>
+                <h2>Your story</h2>
+                <i class="fa-solid fa-gear"></i>
+            </div>
+            <div>
+                <img src="{{ request.user.profile.avatar.url }}" alt="">
+                <p>{{ request.user.firstname }} {{ request.user.lastname }}</p>
+            </div>
         </div>
-        <div>
-            <img src="{{ request.user.profile.avatar.url }}" alt="">
-            <p>{{ request.user.firstname }} {{ request.user.lastname }}</p>
-        </div>
-    </div>
 </div>
