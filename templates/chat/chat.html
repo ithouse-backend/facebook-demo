@@ -29,9 +29,8 @@
     $(document).ready(function () {
         $('#messageForm').submit(function (event) {
             event.preventDefault();
-            var receiverId = $('#receiverId').val();
-            console.log(receiverId);
             var messageText = $('#messageText').val();
+            var receiverId = $('#receiverId').val();
             var csrfToken = $('input[name=csrfmiddlewaretoken]').val();
             $.ajax({
                 url: '/chat/send-message/', // Change the URL to your endpoint for sending messages
@@ -47,42 +46,15 @@
                     $('#messageText').val('');
                     let chatId = $(this).data('chat-id');
                     let currentUserID = $("#currentID").text()
-                    $.ajax({
-                        url: '/chat/get-chats/',
-                        type: 'GET',
-                        success: function (data) {
-                            var chats = JSON.parse(data.data);
-                            chats.sort((a, b) => {
-                                return new Date(a.fields.created_at) - new Date(b.fields.created_at);
-                            })
-                            var chatContainer = $('.chat_text');
-                            chatContainer.empty(); // Clear existing chats
-                            chats.forEach(function (chat) {
-                                var chatHtml;
-                                if (chat.fields.sender === parseInt(currentUserID)) {
-                                    // If the sender is the current user
-                                    chatHtml = `
-                            <div class="sender">
-                                <span>
-                                    <h4>${chat.fields.text}</h4>
-                                </span>
-                            </div>`;
-                                } else {
-                                    // If the sender is the other user
-                                    chatHtml = `
-                            <div class="receiver">
-                                <span>
-                                    <h4>${chat.fields.text}</h4>
-                                </span>
-                            </div>`;
-                                }
-                                chatContainer.append(chatHtml);
-                            });
-                        },
-                        error: function (xhr, status, error) {
-                            console.error(xhr.responseText);
-                        }
-                    });
+                    let chatHtml;
+                    chatHtml = `
+                        <div class='sender'>
+                        <span>
+                            <h4>${messageText}</h4>
+                        </span>
+                        </div>
+                    `
+                    $(".chat_text").append(chatHtml)
                 },
                 error: function (xhr, status, error) {
                     // Handle error response, e.g., show an error message

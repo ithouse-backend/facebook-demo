@@ -1,40 +1,106 @@
-1. get the two person liked
-2. serialize this django object using serialize to json
-3. show them in the html using ajax success request
-data.comments.forEach((comment) => {
-                            let commentElement = comment.comment.time_day ?
-                            `<div classs="post__top-left--avatar post__comment-img" style="background-image: url(${comment.comment.user.profile.avatar.url});"></div>
-                                                  <div class="post__comment-text">
-                                                    <a href="#">
-                                                        ${comment.comment.user.firstname}
-                                                        ${comment.comment.user.lastname}
-                                                    </a>
-                                                    <p>${comment.comment.text}</p>
-                                                    <div>
-                                                        <span data-bs-toggle="tooltip" data-bs-placement="bottom", title="${comment.date_commented}">
-                                                            ${comment.times}d
-                                                        </span>
-                                                        <span>Like</span>
-                                                        <span>Reply</span>
-                                                  </div>
-                                                  <i class="fa-solid fa-ellipsis"></i>
-                                                  `
-                                                  :
-                            `<div classs="post__top-left--avatar post__comment-img" style="background-image: url(${comment.comment.user.profile.avatar.url});"></div>
-                                                  <div class="post__comment-text">
-                                                    <a href="#">
-                                                        ${comment.comment.user.firstname}
-                                                        ${comment.comment.user.lastname}
-                                                    </a>
-                                                    <p>${comment.comment.text}</p>
-                                                    <div>
-                                                        <span data-bs-toggle="tooltip" data-bs-placement="bottom", title="${comment.date_commented}">
-                                                            ${comment.times}h
-                                                        </span>
-                                                        <span>Like</span>
-                                                        <span>Reply</span>
-                                                  </div>
-                                                  <i class="fa-solid fa-ellipsis"></i>
-                                                  `
-                        $(".post__comment").append(commentElement)
-                        })
+{% load static %}
+<div class="chat_sidebar">
+  <div class="chat_sidebar-top">
+    <h1>Chats</h1>
+    <span>
+      <img src="{% static 'img/ellipsis.svg' %}" alt="" />
+      <img src="{% static 'img/pen.svg' %}" alt="" />
+    </span>
+  </div>
+  <div class="chat_sidebar-top-input">
+    <i class="fa-solid fa-search"></i>
+    <input type="text" placeholder="Search Messenger" />
+  </div>
+  <h1 id="currentID" style="display: none">{{ request.user.id }}</h1>
+  <div class="chat_sidebar-users">
+    {% for chat in chats %}
+    {% for user in chat.users.all %}
+    <a href="#" class="chat_user">
+      {% if is_sender %}
+      {% if user != request.user %}
+      <div>
+        <img src="{{ user.profile.avatar.url }}" alt="" id="chat_img" />
+        <p id="chat_user" data-user-id="{{ request.user.id }}">
+          {{ user.firstname }} {{ user.lastname }}
+        </p>
+      </div>
+      {% endif %}
+      {% endif %}
+      {% if not is_sender %}
+      {% if user != request.user %}
+      <div>
+        <img src="{{ user.profile.avatar.url }}" alt="" id="chat_img" />
+        <p id="chat_user" data-user-id="{{ request.user.id }}">
+          {{ user.firstname }} {{ user.lastname }}
+        </p>
+      </div>
+      {% endif %}
+      {% endif %}
+    </a>
+    {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    function loadChats() {
+      let chatId = $(this).data("chat-id");
+      let currentUserID = $("#currentID").text();
+      $.ajax({
+        url: "/chat/get-chats/",
+        type: "GET",
+        success: function (data) {
+          var chats = JSON.parse(data.data);
+          chats.sort((a, b) => {
+            return (
+              new Date(a.fields.created_at) - new Date(b.fields.created_at)
+            );
+          });
+          var chatContainer = $(".chat_text");
+          chatContainer.empty(); // Clear existing chats
+          chats.forEach(function (chat) {
+            let sender = chat.fields.sender;
+            let sender_id = $("#chat_user").data("user-id")
+            var receiverID = $("#receiverId").val(sender);
+            var chatHtml;
+            if (chat.fields.sender === parseInt(currentUserID)) {
+              // If the sender is the current user
+              chatHtml = `
+                            <div class="sender">
+                                <span>
+                                    <h4>${chat.fields.text}</h4>
+                                </span>
+                            </div>`;
+            } else {
+              // If the sender is the other user
+              chatHtml = `
+                            <div class="receiver">
+                                <span>
+                                    <h4>${chat.fields.text}</h4>
+                                </span>
+                            </div>`;
+            }
+            chatContainer.append(chatHtml);
+          });
+        },
+        error: function (xhr, status, error) {
+          console.error(xhr.responseText);
+        },
+      });
+    }
+
+
+    setInterval(loadChats, 7000);
+
+    $(".chat_user").click((e) => {
+      e.preventDefault();
+      loadChats();
+    });
+  });
+</script>
+
+
+<!-- text: sender -- 1  ------ receiver -- 2 -->
+
+<!-- if sender_id == sender val(receiver) -->

@@ -15,10 +15,10 @@
   <div class="chat_sidebar-users">
     {% for chat in chats %}
     {% for user in chat.users.all %}
-    <a href="#" class="chat_user" data-chat-id="{{ chat.id }}">
+    <a href="#" class="chat_user" data-group-id="{{ chat.id }}" data-user-id="{{ request.user.id }}">
       {% if is_sender %}
       {% if user != request.user %}
-      <div>
+      <div id="sender" data-receiver-id="{{ user.id }}">
         <img src="{{ user.profile.avatar.url }}" alt="" id="chat_img" />
         <p id="chat_user" data-user-id="{{ request.user.id }}">
           {{ user.firstname }} {{ user.lastname }}
@@ -28,7 +28,7 @@
       {% endif %}
       {% if not is_sender %}
       {% if user != request.user %}
-      <div>
+      <div id="sender" data-receiver-id="{{ user.id }}">
         <img src="{{ user.profile.avatar.url }}" alt="" id="chat_img" />
         <p id="chat_user" data-user-id="{{ request.user.id }}">
           {{ user.firstname }} {{ user.lastname }}
@@ -44,46 +44,44 @@
 
 <script>
   $(document).ready(function () {
-    function loadChats() {
+    function loadChats(group_id) {
       let chatId = $(this).data("chat-id");
-      let currentUserID = $("#currentID").text();
+      let currentUserID = $(".chat_user").data("user-id")
       $.ajax({
         url: "/chat/get-chats/",
         type: "GET",
+        data: {
+          "group_id": group_id,
+        },
         success: function (data) {
-          var chats = JSON.parse(data.data);
-          chats.sort((a, b) => {
+          data.data.sort((a, b) => {
             return (
-              new Date(a.fields.created_at) - new Date(b.fields.created_at)
+              new Date(a.created_at) - new Date(b.created_at)
             );
           });
           var chatContainer = $(".chat_text");
           chatContainer.empty(); // Clear existing chats
-          chats.forEach(function (chat) {
-            let sender = chat.fields.sender;
-            let sender_id = $("#chat_user").data("user-id")
-            console.log(data.data);
-            var receiverID = $("#receiverId").val(sender);
-            var chatHtml;
-            if (chat.fields.sender === parseInt(currentUserID)) {
-              // If the sender is the current user
+          data.data.forEach((content) => {
+            let chatHtml;
+            if (content.sender_id === parseInt(currentUserID)) {
               chatHtml = `
-                            <div class="sender">
-                                <span>
-                                    <h4>${chat.fields.text}</h4>
-                                </span>
-                            </div>`;
+                <div class='sender'>
+                  <span>
+                    <h4>${content.text}</h4>
+                  </span>
+                </div>
+              `
             } else {
-              // If the sender is the other user
               chatHtml = `
-                            <div class="receiver">
-                                <span>
-                                    <h4>${chat.fields.text}</h4>
-                                </span>
-                            </div>`;
+                <div class='receiver'>
+                  <span>
+                    <h4>${content.text}</h4>
+                  </span>
+                </div>
+              `
             }
-            chatContainer.append(chatHtml);
-          });
+            $(".chat_text").append(chatHtml)
+          })
         },
         error: function (xhr, status, error) {
           console.error(xhr.responseText);
@@ -91,13 +89,37 @@
       });
     }
 
+    function updateUrlAndFetchChats(group_id) {
+      var newUrl = window.location.origin + window.location.pathname + '?group_id=' + group_id;
+      history.pushState({}, '', newUrl);
+      loadChats(group_id);
 
-    setInterval(loadChats, 7000);
+      urlParams = new URLSearchParams(window.location.search);
+    }
 
-    $(".chat_user").click((e) => {
-      e.preventDefault();
-      loadChats();
+    var urlParams = new URLSearchParams(window.location.search);
+    var initialGroupId = urlParams.get('group_id');
+    if (initialGroupId) {
+      updateUrlAndFetchChats(initialGroupId);
+    }
+
+    $('.chat_user').on('click', function (event) {
+      event.preventDefault();
+      let id = $(this).children("#sender").data("receiver-id")
+      let ids = $('#receiverId').val(id);
+      var clickedGroupId = $(this).data('group-id');
+      updateUrlAndFetchChats(clickedGroupId);
     });
+    
+    
+    setInterval(function () {
+      var currentGroupId = urlParams.get('group_id');
+      if (currentGroupId) {
+        loadChats(currentGroupId); // Call the function with the group ID every 7 seconds
+      }
+    }, 10000);
+    console.log(window.location.origin);
+
   });
 </script>
 

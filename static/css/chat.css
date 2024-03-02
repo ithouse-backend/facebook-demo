@@ -281,10 +281,15 @@
   text-align: left;
 }
 .chat_text span {
-  background-color: rgb(1, 171, 103);
   display: inline-block;
   margin: 0;
   padding: 0;
   border-radius: 30px;
   margin: 2px 10px;
+}
+.chat_text .sender span {
+  background-color: rgb(1, 171, 103);
+}
+.chat_text .receiver span {
+  background-color: orange;
 }

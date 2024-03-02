@@ -32,16 +32,24 @@ def chat_page(request):
 
 
 def get_chats(request):
-    chat = Chat.objects.filter(
-        Q(sender=request.user) |
-        Q(receiver=request.user)
+    group_id = request.GET.get("group_id")
+    chats = Chat.objects.filter(
+        Q(sender=request.user) | Q(receiver=request.user),
+        group_id=group_id,
     ).exclude(
         sender=request.user,
         receiver=request.user
     )
-    serialized_chats_loads = serializers.serialize('json', chat)
+    chat_data = [{
+        'sender_id': chat.sender.id,
+        'receiver': chat.receiver.id,
+        'sender': chat.sender.firstname,
+        'receiver': chat.receiver.firstname,
+        'text': chat.text,
+        'created_at': chat.created_at.strftime('%Y-%m-%d %H:%M:%S')
+    } for chat in chats]
     context = {
-        "data": serialized_chats_loads
+        "data": chat_data
     }
     return JsonResponse(context, safe=False)
 
