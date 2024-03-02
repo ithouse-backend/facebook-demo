@@ -101,7 +101,7 @@ class User(AbstractBaseUser):
             self.friendship_user1.filter(user2=other_user).exists()
 
     def __str__(self):
-        return self.firstname
+        return "%s %s --- %s" % (self.firstname, self.lastname, self.email)
 
 
 class Profile(models.Model):

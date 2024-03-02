@@ -12,31 +12,34 @@
     <input type="text" placeholder="Search Messenger" />
   </div>
   <h1 id="currentID" style="display: none">{{ request.user.id }}</h1>
-  {% for is_sender, chat in chats %}
-  <a href="#" class="chat_user" data-chat-id="{{ chat.id }}">
-    <div class="chat_sidebar-users">
+  <div class="chat_sidebar-users">
+    {% for chat in chats %}
+    {% for user in chat.users.all %}
+    <a href="#" class="chat_user" data-chat-id="{{ chat.id }}">
       {% if is_sender %}
+      {% if user != request.user %}
       <div>
-        <img
-          src="{{ chat.receiver.profile.avatar.url }}"
-          alt=""
-          id="chat_img"
-        />
-        <p id="chat_user">
-          {{ chat.receiver.firstname }} {{ chat.receiver.lastname }}
-        </p>
-      </div>
-      {% else %}
-      <div>
-        <img src="{{ chat.sender.profile.avatar.url }}" alt="" id="chat_img" />
+        <img src="{{ user.profile.avatar.url }}" alt="" id="chat_img" />
         <p id="chat_user" data-user-id="{{ request.user.id }}">
-          {{ chat.sender.firstname }} {{ chat.receiver.lastname }}
+          {{ user.firstname }} {{ user.lastname }}
         </p>
       </div>
       {% endif %}
-    </div>
-  </a>
-  {% endfor %}
+      {% endif %}
+      {% if not is_sender %}
+      {% if user != request.user %}
+      <div>
+        <img src="{{ user.profile.avatar.url }}" alt="" id="chat_img" />
+        <p id="chat_user" data-user-id="{{ request.user.id }}">
+          {{ user.firstname }} {{ user.lastname }}
+        </p>
+      </div>
+      {% endif %}
+      {% endif %}
+    </a>
+    {% endfor %}
+    {% endfor %}
+  </div>
 </div>
 
 <script>
@@ -88,7 +91,6 @@
       });
     }
 
-    loadChats();
 
     setInterval(loadChats, 7000);
 
