@@ -90,6 +90,7 @@
 }
 .banner__bottom h2 {
   font-weight: 700;
+  text-transform: capitalize;
 }
 .btn-light {
   background-color: #eeecec !important;

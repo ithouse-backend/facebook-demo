@@ -15,5 +15,83 @@
         <img src="{% static 'img/info.svg' %}" alt="No image">
     </div>
 </div>
+{% include 'chat/chat_text.html' %}
+<form method="post" class="chat_form" id="messageForm">
+    {% csrf_token %}
+    <input type="hidden" id="receiverId" value="receiver_id_here">
+    <input type="text" placeholder="Aa" id="messageText">
+    <button type="submit">
+        ✈️
+    </button>
+</form>
 {% include 'includes/chat_right.html' %}
+<script>
+    $(document).ready(function () {
+        $('#messageForm').submit(function (event) {
+            event.preventDefault();
+            var receiverId = $('#receiverId').val();
+            console.log(receiverId);
+            var messageText = $('#messageText').val();
+            var csrfToken = $('input[name=csrfmiddlewaretoken]').val();
+            $.ajax({
+                url: '/chat/send-message/', // Change the URL to your endpoint for sending messages
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken
+                },
+                data: {
+                    receiver_id: receiverId,
+                    text: messageText
+                },
+                success: function (response) {
+                    $('#messageText').val('');
+                    let chatId = $(this).data('chat-id');
+                    let currentUserID = $("#currentID").text()
+                    $.ajax({
+                        url: '/chat/get-chats/',
+                        type: 'GET',
+                        success: function (data) {
+                            var chats = JSON.parse(data.data);
+                            chats.sort((a, b) => {
+                                return new Date(a.fields.created_at) - new Date(b.fields.created_at);
+                            })
+                            var chatContainer = $('.chat_text');
+                            chatContainer.empty(); // Clear existing chats
+                            chats.forEach(function (chat) {
+                                var chatHtml;
+                                if (chat.fields.sender === parseInt(currentUserID)) {
+                                    // If the sender is the current user
+                                    chatHtml = `
+                            <div class="sender">
+                                <span>
+                                    <h4>${chat.fields.text}</h4>
+                                </span>
+                            </div>`;
+                                } else {
+                                    // If the sender is the other user
+                                    chatHtml = `
+                            <div class="receiver">
+                                <span>
+                                    <h4>${chat.fields.text}</h4>
+                                </span>
+                            </div>`;
+                                }
+                                chatContainer.append(chatHtml);
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response, e.g., show an error message
+                    alert('Error sending message!');
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+
+</script>
 {% endblock %}
