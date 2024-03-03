@@ -11,7 +11,9 @@ def create_or_get_group(sender, instance, created, **kwargs):
     """
     if created:
         group_users = [instance.sender, instance.receiver]
-        existing_group = ChatGroup.objects.filter(users__in=group_users)
+        existing_group = ChatGroup.objects.filter(users__in=group_users).annotate(
+            user_count=Count('users')
+        ).filter(user_count=len(group_users))
 
         if not existing_group.exists():
             # If no group exists, create a new one

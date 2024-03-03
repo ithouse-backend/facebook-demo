@@ -3,8 +3,8 @@
 {% block chat %}
 <div class="chat_center-top">
     <div>
-        <img src="{{ request.user.profile.avatar.url }}" alt="">
-        <h2>
+        <img id="chat_profile" src="{{ request.user.profile.avatar.url }}" alt="">
+        <h2 class="sender_fullname">
             {{ request.user.firstname }}
             {{ request.user.lastname }}
         </h2>
